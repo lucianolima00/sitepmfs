@@ -10,11 +10,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1
   # GET /questionnaires/1.json
   def show
-  end
-
-  # GET /questionnaires/new
-  def new
-    @questionnaire = Questionnaire.new
+    @question = Question.where("Questionnaire_id='#{params[:id]}'")
   end
 
   # GET /questionnaires/1/edit
@@ -24,16 +20,27 @@ class QuestionnairesController < ApplicationController
   # POST /questionnaires
   # POST /questionnaires.json
   def create
-    @questionnaire = Questionnaire.new(questionnaire_params)
+    @questionnaire = Questionnaire.new(params.permit(:subject, :noQuestion))
 
     respond_to do |format|
       if @questionnaire.save
-        format.html { redirect_to @questionnaire, notice: 'Questionnaire was successfully created.' }
+        format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully created.' }
         format.json { render :show, status: :created, location: @questionnaire }
       else
         format.html { render :new }
         format.json { render json: @questionnaire.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # GET /questionnaires/1/write
+  def write
+    @questionnaire = Questionnaire.find(params[:id])
+    @array = []
+
+    @questionnaire.noQuestion.times do
+      @question = Question.new
+      @array << @question
     end
   end
 

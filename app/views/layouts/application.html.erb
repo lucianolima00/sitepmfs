@@ -58,9 +58,9 @@
           </a>
         </li>
         <li class="aside-item">
-          <a class="nav-link" href="test.html">
+          <%=link_to questionnaires_path, class: "nav-link" do%>
             <i class="fas fa-file-alt" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Tests</span>
-          </a>
+          <% end %>
         </li>
         <li class="aside-item">
           <a class="nav-link" href="users.html">
@@ -76,7 +76,14 @@
     </div>
     <!-- Aside Ends-->
 
-    <%= yield %>
+    <div class="container">
+      <!-- Content -->
+      <div class="content">
+        <%= yield %>
+      </div>
+      <!-- Contents Ends -->
+    </div>
+    <!-- Container Ends -->
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->

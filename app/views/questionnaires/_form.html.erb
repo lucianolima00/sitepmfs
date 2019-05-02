@@ -1,27 +1,21 @@
 <%= form_with(model: questionnaire, local: true) do |form| %>
-  <% if questionnaire.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(questionnaire.errors.count, "error") %> prohibited this questionnaire from being saved:</h2>
-
-      <ul>
-      <% questionnaire.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  
+  <div class="form-group">
+    <label for="subject" class="control-label mb-1">Subject</label>
+    <%= form.text_field :subject, id:"subject", class:"form-control", placeholder:"Enter a subject" %>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="num_question" class="control-label mb-1">Number of Questions</label>
+        <%= form.number_field :noQuestion, id:"num-question", class:"form-control cc-exp", placeholder:"Enter the number of questions"%>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :subject %>
-    <%= form.text_field :subject %>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    <%= form.submit "Save", class:"btn btn-success"%>
   </div>
 
-  <div class="field">
-    <%= form.label :noQuestion %>
-    <%= form.number_field :noQuestion %>
-  </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

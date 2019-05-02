@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  textStatement: MyText
+  altA: MyString
+  altB: MyString
+  altC: MyString
+  altD: MyString
+  altE: MyString
+  correctAlt: MyString
+  questionnaire: one
+
+two:
+  textStatement: MyText
+  altA: MyString
+  altB: MyString
+  altC: MyString
+  altD: MyString
+  altE: MyString
+  correctAlt: MyString
+  questionnaire: two

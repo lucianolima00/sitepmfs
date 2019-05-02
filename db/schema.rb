@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_175348) do
+ActiveRecord::Schema.define(version: 2019_05_02_222417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 2019_04_30_175348) do
     t.integer "noQuestion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "textStatement"
+    t.string "altA"
+    t.string "altB"
+    t.string "altC"
+    t.string "altD"
+    t.string "altE"
+    t.string "correctAlt"
+    t.bigint "questionnaire_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,4 +48,5 @@ ActiveRecord::Schema.define(version: 2019_04_30_175348) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "questions", "questionnaires"
 end

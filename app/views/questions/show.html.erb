@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Textstatement:</strong>
+  <%= @question.textStatement %>
+</p>
+
+<p>
+  <strong>Alta:</strong>
+  <%= @question.altA %>
+</p>
+
+<p>
+  <strong>Altb:</strong>
+  <%= @question.altB %>
+</p>
+
+<p>
+  <strong>Altc:</strong>
+  <%= @question.altC %>
+</p>
+
+<p>
+  <strong>Altd:</strong>
+  <%= @question.altD %>
+</p>
+
+<p>
+  <strong>Alte:</strong>
+  <%= @question.altE %>
+</p>
+
+<p>
+  <strong>Correctalt:</strong>
+  <%= @question.correctAlt %>
+</p>
+
+<p>
+  <strong>Questionnaire:</strong>
+  <%= @question.questionnaire %>
+</p>
+
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Back', questions_path %>

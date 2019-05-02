@@ -1,138 +1,132 @@
 <p id="notice"><%= notice %></p>
+<!-- test creator modal scroll -->
+<div class="modal fade" id="testcreator" tabindex="-1" role="create test" aria-labelledby="testcreatorLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">
+        <h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Create Test</h3>
 
-<div class="container">
-		<!-- Content -->
-		<div class="content">
-			<!-- test creator modal scroll -->
-			<div class="modal fade" id="testcreator" tabindex="-1" role="create test" aria-labelledby="testcreatorLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<div class="modal-title">
-								<h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Create Test</h3>
-	
-							</div>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="card">
-								<div class="card-body">
-									<form action="#" method="post" >
-										<div class="form-group">
-											<label for="subject" class="control-label mb-1">Subject</label>
-											<input id="subject" name="subject" type="text" class="form-control" aria-required="true" aria-invalid="false" placeholder="Enter a subject">
-										</div>
-										<div class="row">
-											<div class="col-6">
-												<div class="form-group">
-													<label for="num_question" class="control-label mb-1">Number of Questions</label>
-													<input id="num-question" name="num-question" type="text" class="form-control cc-exp" placeholder="Enter the number of questions">
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-											<button  class="btn btn-success" type="submit">
-												<%= link_to 'Create', new_questionnaire_path %>
-											</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- end test creator modal scroll -->
-			
-			<!-- test creator modal scroll -->
-			<div class="modal fade" id="testedit" tabindex="-1" role="edit test" aria-labelledby="editLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<div class="modal-title">
-								<h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Edit Test</h3>
-	
-							</div>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="card">
-								<div class="card-body">
-									<form action="" id="updateform" method="post" >
-										<div class="form-group">
-											<label for="subject" class="control-label mb-1">Subject</label>
-											<input id="subject" name="subject" type="text" class="form-control" aria-required="true" aria-invalid="false" placeholder="Enter a subject">
-										</div>
-										<div class="row">
-											<div class="col-6">
-												<div class="form-group">
-													<label for="num_question" class="control-label mb-1">Number of Questions</label>
-													<input id="num-question" name="num-question" type="text" class="form-control cc-exp" placeholder="Enter the number of questions">
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-											<button  class="btn btn-success" type="submit">
-												Edit
-											</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- end test creator modal scroll -->
-	
-			<!-- New Tests Button -->
-			<button class="btn btn-primary" data-toggle="modal" id="create" data-target="#testcreator">
-				<i class="fas fa-plus" style="margin-right: 7.5px"></i>New Test
-			</button>
-			<!-- New Tests Button Ends-->
-
-            <!-- Test Table -->
-            <div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
-                <table class="table test-table">
-                    <thead class="thead-dark">
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Teacher Name</th>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Options</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                      <% @questionnaires.each do |questionnaire| %>
-                        <tr>
-                          <td><%= questionnaire.id %></td>
-                          <td><%= questionnaire.noQuestion %></td>
-                          <td><%= questionnaire.subject %></td>
-                          <td><%= questionnaire.created_at %></td>
-                          <td><%= link_to 'Show', questionnaire %>
-                          <%= link_to 'Edit', edit_questionnaire_path(questionnaire) %>
-                          <%= link_to 'Destroy', questionnaire, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                        </tr>
-                      <% end %>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Test Table Ends -->
-		<!-- Footer -->
-		<div class="footer">
-			<div class="row-footer"><p class="copy">Copyright © 2019 Luciano Lima</p></div>
-		</div>
-		<!-- Footer Ends -->
-        </div>
-        <!-- Contents Ends -->
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <%= render 'form', questionnaire: @questionnaire %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Container Ends -->
+</div>
+<!-- end test creator modal scroll -->
+
+<!-- test creator modal scroll -->
+<div class="modal fade" id="testedit" tabindex="-1" role="edit test" aria-labelledby="editLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">
+        <h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Edit Test</h3>
+
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <form action="" id="updateform" method="post" >
+            <div class="form-group">
+              <label for="subject" class="control-label mb-1">Subject</label>
+              <input id="subject" name="subject" type="text" class="form-control" aria-required="true" aria-invalid="false" placeholder="Enter a subject">
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="num_question" class="control-label mb-1">Number of Questions</label>
+                  <input id="num-question" name="num-question" type="text" class="form-control cc-exp" placeholder="Enter the number of questions">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              <button  class="btn btn-success" type="submit">
+                Edit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- end test creator modal scroll -->
+
+<!-- New Tests Button -->
+<button class="btn btn-primary" data-toggle="modal" id="create" data-target="#testcreator">
+<i class="fas fa-plus" style="margin-right: 7.5px"></i>New Test
+</button>
+<!-- New Tests Button Ends-->
+
+    <!-- Test Table -->
+    <div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
+        <table class="table test-table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Number of Questions</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Options</th>
+                </tr>
+            </thead>
+
+            <tbody>
+              <% @questionnaires.each do |questionnaire| %>
+                <tr>
+                  <td><%= questionnaire.id %></td>
+                  <td><%= questionnaire.noQuestion %></td>
+                  <td><%= questionnaire.subject %></td>
+                  <td><%= questionnaire.created_at %></td>
+                  <td>
+								    <div class="table-data-feature">
+                      <%= link_to questionnaire do %>
+                        <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
+                          <i class="fas fa-file-alt"></i>
+                        </button>
+                      <%end%>
+                      <a href="/questionnaires/<%= questionnaire.id %>/write">
+                        <button class="btn-users user-acc" title="" style="padding: 5px 9.5px;">
+                          <i class="fas fa-pen"></i>
+                        </button>
+                      </a>
+                      <%= link_to edit_questionnaire_path(questionnaire) do %>
+                        <button class="btn-users user-acc" id="edit" title="" data-original-title="Edit" style="padding: 5px 7px;">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                      <%end%>
+                      <%= link_to questionnaire, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      <%end%>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!-- Test Table Ends -->
+    <!-- Footer -->
+    <div class="footer">
+      <div class="row-footer"><p class="copy">Copyright © 2019 Luciano Lima</p></div>
+    </div>
+    <!-- Footer Ends -->
+</div>
