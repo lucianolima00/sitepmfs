@@ -1,0 +1,64 @@
+<div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
+    <table class="table test-table table-striped">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Options</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          <tr style="background: rgba(0,0,0,.3)">
+            <td><%= current_user.id %></td>
+            <td><%= current_user.firstName%>
+            <td><%= current_user.lastName %></td>
+            <td><%= Role.find(current_user.role_id).name %></td>
+            <td><%= current_user.admin%></td>
+            <td>
+              <div class="table-data-feature">
+                <%= link_to account_path(:id => current_user.id), class:"text-decoration-none" do %>
+                  <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
+                    <i class="fas fa-file-alt"></i>
+                  </button>
+                <%end%>
+                <%= link_to users_path(:id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                    <i class="fas fa-times"></i>
+                  </button>
+                <%end%>
+              </div>
+            </td>
+          </tr>
+          <% @users.each do |u| %>
+            <% unless u.id == current_user.id %>
+              <tr>
+                <td><%= u.id %></td>
+                <td><%= u.firstName%>
+                <td><%= u.lastName %></td>
+                <td><%= Role.find(u.role_id).name %></td>
+                <td><%= u.admin%></td>
+                <td>
+                  <div class="table-data-feature">
+                    <%= link_to account_show_path(:id => u.id), class:"text-decoration-none" do %>
+                      <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
+                        <i class="fas fa-file-alt"></i>
+                      </button>
+                    <%end%>
+                    <%= link_to users_path(:id => u.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    <%end%>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+    </table>
+</div>
+<!-- Test Table Ends -->

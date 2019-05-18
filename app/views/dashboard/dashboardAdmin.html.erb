@@ -1,0 +1,125 @@
+<!-- Mini-Cards-->
+<div class="row" id="miniCharts">
+    <div class="col-sm-3">
+            <div class="card card-mini">
+                    <div class="card-mini-body">
+                        <div class="row">
+                            <div class="mini-left">
+                                <div class="card-mini-icon card-orange">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                            </div>
+                            <div class="mini-right">
+                                <p class="card-mini-text">Teachers</p>
+                                <h4 class="card-mini-title">20</h4>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <div class="col-sm-3">
+            <div class="card card-mini">
+                    <div class="card-mini-body">
+                        <div class="row">
+                            <div class="mini-left">
+                                <div class="card-mini-icon card-blue">
+                                        <i class="fas fa-user-graduate"></i>
+                                </div>
+                            </div>
+                            <div class="mini-right">
+                                <p class="card-mini-text">Students</p>
+                                <h4 class="card-mini-title">1582</h4>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <div class="col-sm-3">
+            <div class="card card-mini">
+                    <div class="card-mini-body">
+                        <div class="row">
+                            <div class="mini-left">
+                                <div class="card-mini-icon card-purple">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                            <div class="mini-right">
+                                <p class="card-mini-text">Subjects</p>
+                                <h4 class="card-mini-title">35</h4>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <div class="col-sm-3">
+            <div class="card card-mini">
+                    <div class="card-mini-body">
+                        <div class="row">
+                            <div class="mini-left">
+                                <div class="card-mini-icon card-green" style="padding: 5px 10.5px;">
+                                        <i class="fas fa-users"></i>												
+                                </div>
+                            </div>
+                            <div class="mini-right">
+                                <p class="card-mini-text">Classes</p>
+                                <h4 class="card-mini-title">4</h4>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</div>
+<!-- Mini-Cards Ends-->
+
+<!-- Chart of Classes-->
+<div class="card" style="margin: 1rem 0">
+    <div class="card-body">
+        <h5 class="card-title">BCC Chart</h5>
+        <canvas id="mainChart" class="chartjs-render-monitor" style="display: block; width: 100%; height: 250px;"></canvas>
+    </div>
+</div>
+<!-- Chart of Classes Ends-->
+<div class="row" style="margin: 1rem 0">
+    <!-- Students Table -->
+    <div class="col-sm-8" style="padding-left: 0">
+        <table class="table students-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="student-row">
+                    <th scope="row">1</th>
+                    <td class="student-name">Luciano Lima</td>
+                    <td class="student-class">3º Período</td>
+                    <td class="student-average">65</td>
+                </tr>
+                <tr class="student-row">
+                    <th scope="row">2</th>
+                    <td class="student-name">Jefferson Ramos</td>
+                    <td class="student-class">5º Período</td>
+                    <td class="student-average">82</td>
+                </tr>
+                <tr class="student-row">
+                    <th scope="row">3</th>
+                    <td class="student-name">Felipe Dias</td>
+                    <td class="student-class">1º Período</td>
+                    <td class="student-average">97</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Students Table Ends -->
+    <div class="col-sm-4" style="padding-right: 0">
+        <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">Students Chart</h5>
+            <canvas id="studentChart" class="chartjs-render-monitor" style="display: block; height: 200px;"></canvas>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 class QuestionnairesController < ApplicationController
   before_action :set_questionnaire, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index]
 
   # GET /questionnaires
   # GET /questionnaires.json
@@ -10,7 +11,15 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1
   # GET /questionnaires/1.json
   def show
-    @question = Question.where("Questionnaire_id='#{params[:id]}'")
+    @questionnaire = Questionnaire.find(params[:id])
+    @array = []
+    Question.where("Questionnaire_id='#{params[:id]}'").each do |q|
+      @array << q
+    end
+    while @array.length < @questionnaire.noQuestion do
+      q = Question.new
+      @array << q
+    end
   end
 
   # GET /questionnaires/1/edit
@@ -20,7 +29,7 @@ class QuestionnairesController < ApplicationController
   # POST /questionnaires
   # POST /questionnaires.json
   def create
-    @questionnaire = Questionnaire.new(params.permit(:subject, :noQuestion))
+    @questionnaire = Questionnaire.new(params.permit(:subject_id, :noQuestion))
 
     respond_to do |format|
       if @questionnaire.save
@@ -33,13 +42,20 @@ class QuestionnairesController < ApplicationController
     end
   end
 
+  
   # GET /questionnaires/1/write
   def write
     @questionnaire = Questionnaire.find(params[:id])
+    @questions = Question.where("Questionnaire_id='#{params[:id]}'")
+    @questions.each do |q| 
+      q.destroy
+    end
     @array = []
-
-    @questionnaire.noQuestion.times do
+    @questionnaire.noQuestion.times do |index|
       @question = Question.new
+      @i = index
+      @question.num = @i
+      @question.num = index
       @array << @question
     end
   end
@@ -76,6 +92,6 @@ class QuestionnairesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def questionnaire_params
-      params.require(:questionnaire).permit(:subject, :noQuestion)
+      params.require(:questionnaire).permit(:subject_id, :noQuestion)
     end
 end

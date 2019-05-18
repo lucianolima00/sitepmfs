@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subjectName: MyString
+  user: one
+
+two:
+  subjectName: MyString
+  user: two

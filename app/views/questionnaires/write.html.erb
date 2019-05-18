@@ -1,4 +1,4 @@
-<%= form_tag questions_path do %>
+<%= form_tag questions_path, local: true, multipart: true do %>
     <% @array.each do |question| %>
         <%= fields_for 'questions[]', question do |q|%>
             <!-- Questions -->
@@ -22,7 +22,7 @@
                                 <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">                                        
                                     <div class="form-group">
                                         <img class="imgUpload" src="#" alt="" style="display: none; width: 100%;"/>
-                                        <input type="file" class="uploadInput">
+                                        <%= q.file_field :picStatement, class:"uploadInput" %>
                                     </div>
                                 </div>
                             </div>
@@ -65,9 +65,5 @@
     <%= submit_tag nil, class:"btn btn-success btn-lg btn-block" do %>
         <i class="fas fa-check">Submit Test</i>
     <% end %>
+    <%= link_to 'Back', questionnaires_path, class:"btn btn-danger btn-lg btn-block" %>
 <% end %>
-<!-- Footer -->
-<div class="footer">
-    <div class="row-footer"><p class="copy">Copyright © 2019 Luciano Lima</p></div>
-</div>
-<!-- Footer Ends -->

@@ -11,47 +11,66 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :textStatement %>
-    <%= form.text_area :textStatement %>
-  </div>
+  <!-- Questions -->
+  <div id="test">
+      <div class="question">
+          <div class="card">
+              <div class="card-header">Question </div>
+              <div class="card-body" id="enunciate">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                      <a class="nav-link active" id="write-tab" data-toggle="tab" href="#write" role="tab" aria-controls="text" aria-selected="true">Write</a>
+                      </li>
+                      <li class="nav-item">
+                      <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="false">Upload</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content" id="enunciateType" style="margin-top: 10px">
+                      <div class="tab-pane fade show active" id="write" role="tabpanel" aria-labelledby="write-tab">
+                          <%= form.text_area :textStatement, class:"form-control", rows:"10", placeholder:"Write the enunciate" %>
+                      </div>
+                      <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">                                        
+                          <div class="form-group">
+                              <img class="imgUpload" src="#" alt="" style="display: none; width: 100%;"/>
+                              <%= form.file_field :picStatement, class:"uploadInput" %>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
-  <div class="field">
-    <%= form.label :altA %>
-    <%= form.text_field :altA %>
+              <div class="card-body">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">A</div>
+                      <%= form.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">B</div>
+                      <%= form.text_field :altB, class:"form-control", placeholder:"Write the B answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">C</div>
+                      <%= form.text_field :altC, class:"form-control", placeholder:"Write the C answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">D</div>
+                      <%= form.text_field :altD, class:"form-control", placeholder:"Write the D answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">E</div>
+                      <%= form.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fas fa-check"></i></div>
+                      <%= form.text_field :correctAlt, class:"form-control", placeholder:"Write the correct answer" %>
+                  </div>
+                  <%= form.text_field :questionnaire_id, value:@questionnaire.id, class:"d-none"%>
+              </div>
+          </div>  
+      </div>
   </div>
+  <!-- Questions Ends -->
 
-  <div class="field">
-    <%= form.label :altB %>
-    <%= form.text_field :altB %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altC %>
-    <%= form.text_field :altC %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altD %>
-    <%= form.text_field :altD %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altE %>
-    <%= form.text_field :altE %>
-  </div>
-
-  <div class="field">
-    <%= form.label :correctAlt %>
-    <%= form.text_field :correctAlt %>
-  </div>
-
-  <div class="field">
-    <%= form.label :questionnaire_id %>
-    <%= form.text_field :questionnaire_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit class:"btn btn-success btn-lg btn-block" do %>
+        <i class="fas fa-check">Submit Test</i>
+    <% end %>
 <% end %>

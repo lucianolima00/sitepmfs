@@ -31,16 +31,22 @@
       </div>
       <div>
         <div id="navbar-logo">
-          <a  class="navbar-brand" href="#">
-            <img src="img/icons/logo.png" width="52" height="45" alt="">
-          </a>
+          <%= link_to root_path do%>
+            <%= image_tag("icon/logo.png", size:"52x45", alt:"Logo") %>
+          <% end %>
         </div>
       </div>
       <div>
+      <%if user_signed_in?%>
         <a id="navbar-account" href="account.html">
-          <span>Luciano</span>
-          <img class="acc-pict" src="img/icons/profilepictures/profilepicture.jpg" width="35" height="35" alt="">
+          <span style="margin-right: 5px"><%= current_user.firstName%></span>
+          <%= image_tag("icon/profile/profilepicture.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
         </a>
+      <% else %>
+        <%= link_to new_user_session_path, id:"navbar-account" do%>
+          <span style="margin-right: 10px">Sign In</span><%= image_tag("unknow-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+        <% end %>
+      <% end %>
       </div>
     </nav>
     <!-- NavBar Ends -->
@@ -52,26 +58,34 @@
             <i class="fas fa-search"></i><input class="form-control form-control-sm aside-span" id="aside-input" placeholder="Search...">
           </div>
         </li>
-        <li class="aside-item">
-          <a class="nav-link" href="dashboard-admin.html">
-            <i class="fas fa-tachometer-alt"></i><span class="aside-span">Dashboard</span>
-          </a>
-        </li>
-        <li class="aside-item">
-          <%=link_to questionnaires_path, class: "nav-link" do%>
-            <i class="fas fa-file-alt" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Tests</span>
-          <% end %>
-        </li>
-        <li class="aside-item">
-          <a class="nav-link" href="users.html">
-            <i class="fas fa-users"></i><span class="aside-span">Users</span>
-          </a>
-        </li>
-        <li class="aside-item" id="cfg-btn" >
-          <a class="nav-link" href="#">
-            <i class="fas fa-cog"></i><span class="aside-span">Options</span>
-          </a>
-        </li>
+        <%if user_signed_in?%>
+          <li class="aside-item">
+            <%=link_to "/dashboard/dashboardAdmin", class: "nav-link" do%>
+              <i class="fas fa-tachometer-alt"></i><span class="aside-span">Dashboard</span>
+            <% end %>
+          </li>
+          <li class="aside-item">
+            <%=link_to questionnaires_path, class: "nav-link" do%>
+              <i class="fas fa-file-alt" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Tests</span>
+            <% end %>
+          </li>
+          <li class="aside-item">
+            <%=link_to subjects_path, class: "nav-link" do%>
+              <i class="fas fa-book" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Subjects</span>
+            <% end %>
+          </li>
+          <li class="aside-item">
+            <%=link_to users_path, class:"nav-link" do%>
+              <i class="fas fa-users"></i><span class="aside-span">Users</span>
+            <% end %>
+          </li>
+          <li class="aside-item" id="cfg-btn">
+            <%= link_to destroy_user_session_path, method: :delete, class:"nav-link" do%>
+              <i class="fas fa-sign-out-alt"></i><span class="aside-span">Sign Out</span>
+            <% end %>
+          </li>
+        <% else %>
+        <% end %>
       </ul>
     </div>
     <!-- Aside Ends-->
@@ -80,6 +94,11 @@
       <!-- Content -->
       <div class="content">
         <%= yield %>
+        <!-- Footer -->
+        <div class="footer">
+            <div class="row-footer"><p class="copy">Copyright © 2019 Luciano Lima</p></div>
+        </div>
+        <!-- Footer Ends -->
       </div>
       <!-- Contents Ends -->
     </div>

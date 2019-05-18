@@ -1,6 +1,21 @@
 <h1>Editing Questionnaire</h1>
 
-<%= render 'form', questionnaire: @questionnaire %>
-
-<%= link_to 'Show', @questionnaire %> |
-<%= link_to 'Back', questionnaires_path %>
+<%= form_with(model: @questionnaire, local: true) do |form| %>
+    <div class="form-group">
+        <label for="subject" class="control-label mb-1">Subject</label>
+        <%= select "questionnaire", "subject_id", Subject.all.collect{|subject| [subject.subjectName, subject.id]}, { index: :subject_id, promt: "Enter a subject" },id:"subject", class:"form-control", placeholder:"Enter a subject" %>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+            <label for="num_question" class="control-label mb-1">Number of Questions</label>
+            <%= form.number_field :noQuestion, id:"num-question", class:"form-control cc-exp", placeholder:"Enter the number of questions"%>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
+        <%= link_to 'Show', @questionnaire, class:"btn btn-primary"  %>
+        <%= form.submit "Save", class:"btn btn-success"%>
+    </div>
+<% end %> 

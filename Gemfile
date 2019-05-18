@@ -31,6 +31,13 @@ gem 'jbuilder', '~> 2.5'
 gem 'mini_magick', '~> 4.8'
 gem "carrierwave"
 
+gem 'rack-cors'
+
+#gem "azure-storage", require: false
+
+
+gem 'image_processing', '~> 1.2'
+
 gem 'devise'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

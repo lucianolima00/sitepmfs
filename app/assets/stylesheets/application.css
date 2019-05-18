@@ -1,16 +1,13 @@
 body{
 	height: 100vh;
+	background-color: #FEFEFE;
+	color: #111;
+	overflow-x: hidden;
 }
 
 html, body, .container, .footer{
 	font-family: 'Montserrat', sans-serif;
 	max-width: 100%;
-}
-
-body {
-	background-color: #FEFEFE;
-	color: #111;
-	overflow-x: hidden;
 }
 
 body #navbar{
@@ -50,6 +47,17 @@ body .row-footer{
 	-webkit-transition: padding-left 0.5s;
 	transition-timing-function: ease;
 	border-radius: .25rem;
+}
+
+.form-control{
+	background: rgba(0, 0, 0, 0);
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+	border-radius: inherit !important;
+}
+
+.waves-input-wrapper{
+	display: unset !important;
 }
 
 .container{
@@ -322,7 +330,7 @@ body .row-footer{
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 10px;
-		grid-auto-rows: minmax(100px, auto);
+		grid-auto-rows: minmax(75px, auto);
 		transition: padding-left 0.5s;
 		/* Safari and Chrome*/
 		-webkit-transition: padding-left 0.5s;
@@ -435,7 +443,7 @@ body .row-footer{
 	
 	.form-label-group input {
 		padding-top: 20px !important;
-		height: 26px !important;
+		height: 40px !important;
 		border-radius: 2rem;
 	}
 	
@@ -504,7 +512,7 @@ body .row-footer{
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 10px;
-		grid-auto-rows: minmax(100px, auto);
+		grid-auto-rows: minmax(75px, auto);
 		transition: padding-left 0.5s;
 		/* Safari and Chrome*/
 		-webkit-transition: padding-left 0.5s;
@@ -610,7 +618,7 @@ body .row-footer{
 	
 	.form-label-group input {
 		padding-top: 20px !important;
-		height: 26px !important;
+		height: 40px !important;
 		border-radius: 2rem;
 	}
 	
@@ -661,7 +669,7 @@ body .row-footer{
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 10px;
-		grid-auto-rows: minmax(100px, auto);
+		grid-auto-rows: minmax(75px, auto);
 		transition: padding-left 0.5s;
 		/* Safari and Chrome*/
 		-webkit-transition: padding-left 0.5s;
@@ -780,7 +788,7 @@ body .row-footer{
 	
 	.form-label-group input {
 		padding-top: 20px !important;
-		height: 26px !important;
+		height: 40px !important;
 		border-radius: 2rem;
 	}
 	

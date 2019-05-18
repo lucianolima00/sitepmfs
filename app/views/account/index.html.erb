@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title" style="margin-top: 10px">Welcome <%= @user.firstName %></h5>
+    </div>
+    <div class="card-body">
+        <div class="media">
+            <%= image_tag('unknow-user.jpg', class:"align-self-center mr-3 account-big", alt:"Luciano Lima,", size:"150x150")%>
+            <div class="media-body">  
+                <div class="user-info">
+                    <div class="row" style="margin-top: 40px">
+                        <div class="col-md-6">
+                            <p>E-mail: <%= @user.email %></p>
+                            <p>Age: 19 years</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Class: 3º Período</p>
+                            <p>Registration: <%= @user.regNumber %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User's Chart-->
+        <div class="card" style="margin: 1rem 0">
+            <div class="card-body">
+                <h5 class="card-title">Your Chart</h5>
+                <canvas id="mainChart" class="chartjs-render-monitor" style="display: block; width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+        <!-- User's Chart Ends-->
+        <!-- Comments Table -->
+        <div style="height: 600px; overflow: hidden; border-radius: 10px;">
+            <table class="table comments-table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Teacher</th>
+                    <th scope="col">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div style=" overflow-y: scroll;">
+                        <tr>
+                        <th scope="row">2019-07-28</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2018-12-05</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2018-07-22</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                        </tr>
+                    </div>
+                </tbody>
+            </table>
+        </div>
+        <!-- Comments Table Ends -->
+    </div>
+</div>

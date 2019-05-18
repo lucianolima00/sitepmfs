@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_user.admin == true %>
+  <!-- New Tests Button -->
+  <%= link_to new_subject_path, class:"btn btn-primary" do %>
+    <i class="fas fa-plus" style="margin-right: 7.5px"></i>New Subject
+  <% end %>
+  <!-- New Tests Button Ends-->
+<% end %>
+    <!-- Test Table -->
+    <div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
+        <table class="table test-table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Teacher</th>
+                <th scope="col">Options</th>
+                </tr>
+            </thead>
+
+            <tbody>
+              <% @subjects.each do |subject| %>
+                <tr>
+                  <td><%= subject.id %></td>
+                  <td><%= subject.subjectName %></td>
+                  <td><%= subject.user.firstName%></td>
+                  <td>
+                    <div class="table-data-feature">
+                      <%= link_to subject, class:"text-decoration-none" do %>
+                        <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
+                          <i class="fas fa-file-alt"></i>
+                        </button>
+                      <%end%>
+                      <%= link_to edit_subject_path(subject), remote: true, :class=>"text-decoration-none" do %>
+                        <button class="btn-users user-acc" id="edit" title="" data-original-title="Edit" style="padding: 5px 7px;">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                      <%end%>
+                      <%= link_to subject, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      <%end%>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+    </div>
+    <!-- Test Table Ends -->
+</div>

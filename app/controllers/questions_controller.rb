@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
+    @questionnaire = Questionnaire.find(@question.questionnaire_id)
   end
 
   # POST /questions
@@ -28,7 +29,7 @@ class QuestionsController < ApplicationController
 
     params["questions"].each do |question|
       if question["textStatement"] != "" || question["altA"] != "" || question["altB"] != "" || question["altC"] != "" || question["altD"] != "" || question["altE"] != "" || question["correctAlt"] != "" 
-        @question = Question.create(question_params(question))
+        @question = Question.create(questions_params(question))
       end
     end
 
@@ -48,10 +49,11 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
+    @questionnaire = Questionnaire.find(@question.questionnaire_id)
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
+        format.html { redirect_to @questionnaire, notice: 'Question was successfully updated.' }
+        format.json { render :show, status: :ok, location: @questionnaire }
       else
         format.html { render :edit }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -64,7 +66,7 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
+      format.html { redirect_to questionnaires_url, notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -76,7 +78,12 @@ class QuestionsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def question_params(my_params)
-      my_params.permit(:textStatement, :altA, :altB, :altC, :altD, :altE, :correctAlt, :questionnaire_id) 
+    def questions_params(my_params)
+      my_params.permit(:textStatement, :picStatement, :altA, :altB, :altC, :altD, :altE, :correctAlt, :questionnaire_id) 
+    end
+    
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def question_params
+      params.require(:question).permit(:textStatement, :picStatement, :altA, :altB, :altC, :altD, :altE, :correctAlt, :questionnaire_id) 
     end
 end

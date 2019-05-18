@@ -1,0 +1,60 @@
+<%= form_for(current_user, as: current_user, url: registration_path(current_user)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: current_user %>
+
+  <!-- Content -->
+  <div class="content">
+      <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card card-signin my-5" style="box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3)">
+                  <div class="card-body">
+                      <div class="card-title text-center">
+                          <p>Sign Up</p>
+                      </div>
+                      <form class="form-signin">
+                        <div class="form-label-group">
+                            <%= f.text_field :firstName, autofocus: true, autocomplete: "Jhon", id:"fistName", class:"form-control" %>
+                            <label for="firstName">First Name</label>
+
+                        <div class="form-label-group">
+                            <%= f.text_field :lastName, autocomplete: "Wood", id:"lastName", class:"form-control" %>
+                            <label for="lastName">Last Name</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <%= f.email_field :email, autocomplete: "email", id:"inputEmail", class:"form-control" %>
+                            <label for="inputEmail">Email address</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <%= f.number_field :regNumber, autocomplete: "new-regNumber", id:"inputRegistration", class:"form-control", required:true %>
+                            <label for="inputRegistration">Registration Number</label>
+                        </div>
+        
+                        <div class="form-label-group">
+                            <%= f.password_field :password, autocomplete: "new-password", id:"inputPassword", class:"form-control", required:true %>
+                            <label for="inputPassword">Password</label>
+                            <% if @minimum_password_length %>
+                            <em style="font-size: 8pt">(<%= @minimum_password_length %> characters minimum)</em>
+                            <% end %>
+                        </div>
+        
+                        <div class="form-label-group">
+                            <%= f.password_field :password_confirmation, autocomplete: "new-password", id:"inputConfirmPassword", class:"form-control", required: true %>
+                            <label for="inputConfirmPassword">Confirm Password</label>
+                        </div>
+                        <%= f.number_field :role_id, id:"inputRole", value:1, class:"d-none" %>
+
+                        <%= f.submit "Sign up", class:"btn btn-lg btn-primary btn-block text-uppercase" %>
+                        
+                        <hr class="my-4">
+                        
+                        <%= render "devise/shared/links" %>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Contents Ends -->
+
+<% end %>

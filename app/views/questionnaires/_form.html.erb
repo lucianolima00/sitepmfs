@@ -2,7 +2,7 @@
   
   <div class="form-group">
     <label for="subject" class="control-label mb-1">Subject</label>
-    <%= form.text_field :subject, id:"subject", class:"form-control", placeholder:"Enter a subject" %>
+    <%= form.select :subject_id, Subject.all.collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
   </div>
   <div class="row">
     <div class="col-6">
@@ -12,8 +12,9 @@
       </div>
     </div>
   </div>
+  <%= form.text_field :user_id, value:current_user.id, class:"d-none"%>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+    <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
     <%= form.submit "Save", class:"btn btn-success"%>
   </div>
 
