@@ -11,7 +11,7 @@
             <div id="test">
                 <div class="question">
                     <div class="card">
-                        <div class="card-header"><%= question.num %> Question </div>
+                        <div class="card-header"><%= @numQuestion[@array.find_index(question)]%>o Question </div>
                         <div class="card-body" id="enunciate">
                             <% if question.picStatement.attached? %>
                                 <div class="tab-content" id="enunciateType" style="margin-top: 10px">

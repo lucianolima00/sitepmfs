@@ -1,2 +1,44 @@
-<h1>Account#edit</h1>
-<p>Find me in app/views/account/edit.html.erb</p>
+<%= form_for(current_user, as: current_user, url: account_update_path(:id => current_user.id)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: current_user %>
+
+  <!-- Content -->
+  <div class="content">
+      <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card card-signin my-5" style="box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3)">
+                  <div class="card-body">
+                      <div class="card-title text-center">
+                          <p>Editing Account</p>
+                      </div>
+                        <p> Welcome <%= current_user.firstName%>, please complete your account with your informations</p>
+                      <form class="form-signin">
+                        <label for="avatar">Picture: </label>
+                        <br/>
+                        <%= f.file_field :avatar%>
+                        <div class="form-label-group">
+                            <%= f.date_field :birth, as: :date, value: f.object.try(:strftime,"%mm/%dd/%YYYY"), class: 'form-control' %>
+                            <label for="birthday">Birthday</label>
+                        </div>
+                        <div class="form-label-group">
+                            <%= select("student", :schoolroom_id, Schoolroom.all.collect{|schoolroom| [schoolroom.name, schoolroom.id]}, :prompt => "Class:", autocomplete: 1, id:"Schoolroom", class:"form-control" )%>
+                        </div>
+
+                        <div class="form-label-group">
+                                <% for subject in Subject.all%>
+                                    <%= check_box_tag :subjects, subject.id, @user.subjects.include?(subject) %>
+                                    <%= subject.subjectName %><br />
+                                <% end %>
+                            <label for="subjects">Current subjects</label>
+                        </div>
+        
+                        <%= f.submit "Update", class:"btn btn-lg btn-primary btn-block text-uppercase" %>
+                        
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Contents Ends -->
+
+<% end %>

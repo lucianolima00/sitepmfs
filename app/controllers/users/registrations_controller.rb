@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token, only: [:account_update]  
 
   def index
-    @users = User.all
+    @users = User.all.order(:id)
   end
 
   # GET /resource/sign_up
@@ -38,7 +38,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def set_teacher
-    @role = @user.role_id
     Student.destroy(Student.where("User_id='#{params[:id]}'").ids.first)
     Teacher.new
     Teacher.create("user_id" => params[:id])
@@ -46,11 +45,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def set_student
-    @role = @user.role_id
     Teacher.destroy(Teacher.where("User_id='#{params[:id]}'"))
     Student.new
     Student.create("user_id" => params[:id])
     @user.role_id = 1
+    @user.save
+  end
+
+  def set_admin
+    if @user.admin
+      @user.admin = false
+    else
+      @user.admin = true
+    end
+
     @user.save
   end
 

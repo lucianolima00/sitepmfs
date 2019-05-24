@@ -9,3 +9,7 @@
 ['student', 'teacher', 'user'].each do |role|
     Role.find_or_create_by({name:role})
 end
+
+['1o Periodo', '3o Periodo', '5o Periodo', '7o Periodo'].each do |schoolroom|
+    Schoolroom.find_or_create_by({name:schoolroom})
+end

@@ -1,4 +1,4 @@
-<%= form_for(current_user, as: current_user, url: registration_path(current_user)) do |f| %>
+<%= form_for(current_user, as: current_user, url: account_create_path(:id => current_user.id)) do |f| %>
   <%= render "devise/shared/error_messages", resource: current_user %>
 
   <!-- Content -->
@@ -8,47 +8,32 @@
               <div class="card card-signin my-5" style="box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3)">
                   <div class="card-body">
                       <div class="card-title text-center">
-                          <p>Sign Up</p>
+                          <p>Creating Account</p>
                       </div>
+                        <p> Welcome <%= current_user.firstName%>, please complete your account with your informations</p>
                       <form class="form-signin">
+                        <label for="avatar">Picture: </label>
+                        <br/>
+                        <%= f.file_field :avatar%>
                         <div class="form-label-group">
-                            <%= f.text_field :firstName, autofocus: true, autocomplete: "Jhon", id:"fistName", class:"form-control" %>
-                            <label for="firstName">First Name</label>
-
-                        <div class="form-label-group">
-                            <%= f.text_field :lastName, autocomplete: "Wood", id:"lastName", class:"form-control" %>
-                            <label for="lastName">Last Name</label>
+                            <%= f.date_field :birth, as: :date, value: f.object.try(:strftime,"%mm/%dd/%YYYY"), class: 'form-control' %>
+                            <label for="birthday">Birthday</label>
                         </div>
 
-                        <div class="form-label-group">
-                            <%= f.email_field :email, autocomplete: "email", id:"inputEmail", class:"form-control" %>
-                            <label for="inputEmail">Email address</label>
-                        </div>
-
-                        <div class="form-label-group">
-                            <%= f.number_field :regNumber, autocomplete: "new-regNumber", id:"inputRegistration", class:"form-control", required:true %>
-                            <label for="inputRegistration">Registration Number</label>
-                        </div>
-        
-                        <div class="form-label-group">
-                            <%= f.password_field :password, autocomplete: "new-password", id:"inputPassword", class:"form-control", required:true %>
-                            <label for="inputPassword">Password</label>
-                            <% if @minimum_password_length %>
-                            <em style="font-size: 8pt">(<%= @minimum_password_length %> characters minimum)</em>
-                            <% end %>
-                        </div>
-        
-                        <div class="form-label-group">
-                            <%= f.password_field :password_confirmation, autocomplete: "new-password", id:"inputConfirmPassword", class:"form-control", required: true %>
-                            <label for="inputConfirmPassword">Confirm Password</label>
-                        </div>
-                        <%= f.number_field :role_id, id:"inputRole", value:1, class:"d-none" %>
-
-                        <%= f.submit "Sign up", class:"btn btn-lg btn-primary btn-block text-uppercase" %>
+                        <% if @user.role_id == 1%>
+                            <div class="form-label-group">
+                                <%= select("student", :schoolroom_id, Schoolroom.all.collect{|schoolroom| [schoolroom.name, schoolroom.id]}, :prompt => "Class:", autocomplete: 1, id:"Schoolroom", class:"form-control" )%>
+                            </div>
+                            <div class="form-label-group">
+                                    <% for subject in Subject.all%>
+                                        <%= check_box_tag :subjects, subject.id, @user.subjects.include?(subject) %>
+                                        <%= subject.subjectName %><br />
+                                    <% end %>
+                                <label for="subjects">Current subjects</label>
+                            </div>
+                        <% end %>
+                        <%= f.submit "Complete", class:"btn btn-lg btn-primary btn-block text-uppercase" %>
                         
-                        <hr class="my-4">
-                        
-                        <%= render "devise/shared/links" %>
                       </form>
                   </div>
               </div>

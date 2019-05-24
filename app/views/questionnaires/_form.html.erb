@@ -2,7 +2,11 @@
   
   <div class="form-group">
     <label for="subject" class="control-label mb-1">Subject</label>
-    <%= form.select :subject_id, Subject.all.collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
+    <% if current_user.admin == true %>
+      <%= form.select :subject_id, Subject.all.collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
+    <% else %>
+      <%= form.select :subject_id, Subject.find(current_user.subjects).collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
+    <% end %>
   </div>
   <div class="row">
     <div class="col-6">

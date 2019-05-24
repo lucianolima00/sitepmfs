@@ -6,18 +6,22 @@
             <th scope="col">First Name</th>
             <th scope="col">Last name</th>
             <th scope="col">Role</th>
-            <th scope="col">Admin</th>
+            <% if current_user.role_id == 2 %>
+              <th scope="col">Admin</th>
+            <% end %>
             <th scope="col">Options</th>
             </tr>
         </thead>
 
         <tbody>
-          <tr style="background: rgba(0,0,0,.3)">
+          <tr>
             <td><%= current_user.id %></td>
             <td><%= current_user.firstName%>
             <td><%= current_user.lastName %></td>
             <td><%= Role.find(current_user.role_id).name %></td>
-            <td><%= current_user.admin%></td>
+            <% if current_user.role_id == 2 %>
+              <td><%= current_user.admin%></td>
+            <% end %>
             <td>
               <div class="table-data-feature">
                 <%= link_to account_path(:id => current_user.id), class:"text-decoration-none" do %>
@@ -25,10 +29,12 @@
                     <i class="fas fa-file-alt"></i>
                   </button>
                 <%end%>
-                <%= link_to users_path(:id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                    <i class="fas fa-times"></i>
-                  </button>
+                <% if current_user.role_id != 1%>
+                  <%= link_to users_path(:id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  <%end%>
                 <%end%>
               </div>
             </td>
@@ -40,7 +46,9 @@
                 <td><%= u.firstName%>
                 <td><%= u.lastName %></td>
                 <td><%= Role.find(u.role_id).name %></td>
-                <td><%= u.admin%></td>
+                <% if current_user.role_id == 2 %>
+                  <td><%= u.admin%></td>
+                <% end %>
                 <td>
                   <div class="table-data-feature">
                     <%= link_to account_show_path(:id => u.id), class:"text-decoration-none" do %>
@@ -48,10 +56,12 @@
                         <i class="fas fa-file-alt"></i>
                       </button>
                     <%end%>
-                    <%= link_to users_path(:id => u.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                        <i class="fas fa-times"></i>
-                      </button>
+                    <% if current_user.role_id != 1%>
+                      <%= link_to users_path(:id => u.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      <%end%>
                     <%end%>
                   </div>
                 </td>

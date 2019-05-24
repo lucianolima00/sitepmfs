@@ -1,11 +1,12 @@
 class QuestionnairesController < ApplicationController
   before_action :set_questionnaire, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index]
+  before_action :num_question, only: [:show, :edit, :update, :write]
 
   # GET /questionnaires
   # GET /questionnaires.json
   def index
-    @questionnaires = Questionnaire.all
+    @questionnaires = Questionnaire.all.order(created_at: :desc)
   end
 
   # GET /questionnaires/1
@@ -50,6 +51,7 @@ class QuestionnairesController < ApplicationController
     @questions.each do |q| 
       q.destroy
     end
+    @alt = ["A", "B", "C", "D", "E"]
     @array = []
     @questionnaire.noQuestion.times do |index|
       @question = Question.new
@@ -93,5 +95,13 @@ class QuestionnairesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def questionnaire_params
       params.require(:questionnaire).permit(:subject_id, :noQuestion)
+    end
+
+    def num_question
+      @questionnaire = Questionnaire.find(params[:id])
+      @numQuestion = []
+      @questionnaire.noQuestion.times do |i|
+        @numQuestion << i + 1
+      end
     end
 end

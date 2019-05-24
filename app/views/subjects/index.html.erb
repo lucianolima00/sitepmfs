@@ -24,7 +24,7 @@
                 <tr>
                   <td><%= subject.id %></td>
                   <td><%= subject.subjectName %></td>
-                  <td><%= subject.user.firstName%></td>
+                  <td><%= User.find(Teacher.find(subject.teacher_id).user_id).firstName%></td>
                   <td>
                     <div class="table-data-feature">
                       <%= link_to subject, class:"text-decoration-none" do %>

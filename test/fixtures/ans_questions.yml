@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  alt_selected: MyString
+  student: one
+  question: one
+
+two:
+  alt_selected: MyString
+  student: two
+  question: two

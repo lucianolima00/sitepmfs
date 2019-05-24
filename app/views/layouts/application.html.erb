@@ -38,13 +38,28 @@
       </div>
       <div>
       <%if user_signed_in?%>
-        <a id="navbar-account" href="account.html">
-          <span style="margin-right: 5px"><%= current_user.firstName%></span>
-          <%= image_tag("icon/profile/profilepicture.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+        <a class="nav-link dropdown" id="navbar-account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span style="margin-right: 5px"><%= current_user.firstName%></span>
+        <% if current_user.avatar.attached? %>
+          <%= image_tag(current_user.avatar, alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+        <% else %>
+          <%= image_tag("icon/profile/unknown-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+        <% end%>
         </a>
+        <div class="dropdown-menu" aria-labelledby="navbar-account">
+        <%=link_to account_path(:id => current_user.id), class:"dropdown-item" do%>
+          <i class="fas fa-user"></i>
+          <span>Account</span>
+        <% end %>
+        <a class="dropdown-item" href="#"><i class="fas fa-cog"></i>Options</a>
+        <div class="dropdown-divider"></div>
+        <%= link_to destroy_user_session_path, method: :delete, class:"dropdown-item" do%>
+          <i class="fas fa-sign-out-alt"></i><span class="aside-span">Sign Out</span>
+        <% end %>
+        </div>
       <% else %>
         <%= link_to new_user_session_path, id:"navbar-account" do%>
-          <span style="margin-right: 10px">Sign In</span><%= image_tag("unknow-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+          <span style="margin-right: 10px">Sign In</span><%= image_tag("icon/profile/unknown-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
         <% end %>
       <% end %>
       </div>
@@ -69,11 +84,13 @@
               <i class="fas fa-file-alt" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Tests</span>
             <% end %>
           </li>
-          <li class="aside-item">
-            <%=link_to subjects_path, class: "nav-link" do%>
-              <i class="fas fa-book" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Subjects</span>
-            <% end %>
-          </li>
+          <%if current_user.role_id != 1%>
+            <li class="aside-item">
+              <%=link_to subjects_path, class: "nav-link" do%>
+                <i class="fas fa-book" style="padding-left: 3.5px; margin-right: 1px;"></i><span class="aside-span">Subjects</span>
+              <% end %>
+            </li>
+          <% end%>
           <li class="aside-item">
             <%=link_to users_path, class:"nav-link" do%>
               <i class="fas fa-users"></i><span class="aside-span">Users</span>

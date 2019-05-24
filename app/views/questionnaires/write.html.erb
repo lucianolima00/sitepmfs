@@ -5,7 +5,7 @@
             <div id="test">
                 <div class="question">
                     <div class="card">
-                        <div class="card-header">Question </div>
+                        <div class="card-header"><%= @numQuestion[@array.find_index(question)]%>o  Question </div>
                         <div class="card-body" id="enunciate">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -50,8 +50,8 @@
                                 <%= q.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
                             </div>
                             <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fas fa-check"></i></div>
-                                <%= q.text_field :correctAlt, class:"form-control", placeholder:"Write the correct answer" %>
+                                <div class="input-group-text">Correct Alternative: </div>
+                                <%= q.select :correctAlt, @alt.collect, class:"form-control", placeholder:"Write the correct answer" %>
                             </div>
                             <%= q.text_field :questionnaire_id, value:@questionnaire.id, class:"d-none"%>
                         </div>

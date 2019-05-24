@@ -4,25 +4,32 @@
     </div>
     <div class="card-body">
         <div class="media">
-            <%= image_tag('unknow-user.jpg', class:"align-self-center mr-3 account-big", alt:"Luciano Lima,", size:"150x150")%>
+            <%= image_tag('icon/profile/unknown-user.jpg', class:"align-self-center mr-3 account-big", alt:"Luciano Lima,", size:"150x150")%>
             <div class="media-body">  
                 <div class="user-info">
                     <div class="row" style="margin-top: 40px">
-                        <div class="col-md-3">
+                        <div class="col">
                             <p>E-mail: <%= @user.email %></p>
                             <p>Age: 19 years</p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <p>Class: 3º Período</p>
                             <p>Registration: <%= @user.regNumber %></p>
                         </div>
-                        <div class="col-md-3">
-                            <% if @user.role_id == 1%>
-                                <%= button_to "Teacher", set_teacher_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
-                            <% else %>
-                                <%= button_to "Student", set_student_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
-                            <% end %>
-                        </div>
+                        <% if current_user.role_id != 1 %>
+                            <div class="col">
+                                <% if @user.role_id == 1%>
+                                    <%= button_to "Teacher", set_teacher_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
+                                <% else %>
+                                    <%= button_to "Student", set_student_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
+                                <% end %><br/>
+                                <% if @user.admin%>
+                                    <%= button_to "Admin OFF", set_admin_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
+                                <% else %>
+                                    <%= button_to "Admin", set_admin_path(:id => @user.id), method: :put, class:"btn btn-primary btn-users user-acc"%>
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
                 </div>
             </div>

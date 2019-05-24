@@ -26,7 +26,7 @@
 <!-- test editor modal scroll -->
 <div id="testedit"></div>
 <!-- end test creator modal scroll -->
-<% if current_user.admin == true %>
+<% if current_user.role_id == 2 %>
   <!-- New Tests Button -->
   <button class="btn btn-primary" data-toggle="modal" id="create" data-target="#testcreator">
   <i class="fas fa-plus" style="margin-right: 7.5px"></i>New Questionnaire
@@ -50,7 +50,7 @@
           <% @questionnaires.each do |questionnaire| %>
             <tr>
               <td><%= questionnaire.id %></td>
-              <td><%= User.find(Subject.find(questionnaire.subject_id).user_id).firstName%>
+              <td><%= User.find(Teacher.find(Subject.find(questionnaire.subject_id).teacher_id).user_id).firstName%>
               <td><%= Subject.find(questionnaire.subject_id).subjectName %></td>
               <td><%= questionnaire.noQuestion %></td>
               <td>

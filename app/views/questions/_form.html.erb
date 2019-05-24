@@ -61,7 +61,7 @@
                   </div>
                   <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fas fa-check"></i></div>
-                      <%= form.text_field :correctAlt, class:"form-control", placeholder:"Write the correct answer" %>
+                      <%= form.select :correctAlt, @alt.collect.all, class:"form-control", placeholder:"Write the correct answer" %>
                   </div>
                   <%= form.text_field :questionnaire_id, value:@questionnaire.id, class:"d-none"%>
               </div>
