@@ -558,5 +558,26 @@ if(Body){
 		window.myLine.update();
 	});*/
 
+	var alt = document.getElementsByClassName("alternative")
+	var altRadio
+
+	alt.forEach(function(a){
+		a.children.forEach(function(c){
+			if(c.tagName == "input"){
+				altRadio = c;
+			}
+		});
+		a.addEventListener("click", function(){
+			altRadio.checked = true
+		});
+	});
+	for(a in alt){
+		for(c in a.children){
+			if(c.tagName == "input"){
+				altRadio = c;
+			}
+		}
+		
+	}
 
 }

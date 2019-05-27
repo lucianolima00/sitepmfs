@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_21_134142) do
+ActiveRecord::Schema.define(version: 2019_05_25_132955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 2019_05_21_134142) do
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_ans_questions_on_question_id"
     t.index ["student_id"], name: "index_ans_questions_on_student_id"
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "questionnaire_id"
+    t.string "answers", default: [], array: true
+    t.integer "grade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_answers_on_questionnaire_id"
+    t.index ["student_id"], name: "index_answers_on_student_id"
   end
 
   create_table "grade", force: :cascade do |t|
@@ -141,6 +152,8 @@ ActiveRecord::Schema.define(version: 2019_05_21_134142) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ans_questions", "questions"
   add_foreign_key "ans_questions", "students"
+  add_foreign_key "answers", "questionnaires"
+  add_foreign_key "answers", "students"
   add_foreign_key "grade", "subjects"
   add_foreign_key "grade", "users"
   add_foreign_key "questionnaires", "users"
