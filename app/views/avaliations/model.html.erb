@@ -1,0 +1,70 @@
+<%= form_tag avaliation_questions_path, local: true, multipart: true do %>
+    <% @array.each do |avaliation_question|%>
+        <%= fields_for 'avaliation_questions[]', avaliation_question do |q|%>
+            <!-- Questions -->
+            <div id="avaliation">
+                <div class="question my-3">
+                    <div class="card">
+                        <div class="card-header">Avalation Question </div>
+                        <div class="card-body" id="enunciate">
+                            <%= q.text_area :Statement, class:"form-control", rows:"10", placeholder:"Write the enunciate" %>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">A</div>
+                                <%= q.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">B</div>
+                                <%= q.text_field :altB, class:"form-control", placeholder:"Write the B answer" %>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">C</div>
+                                <%= q.text_field :altC, class:"form-control", placeholder:"Write the C answer" %>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">D</div>
+                                <%= q.text_field :altD, class:"form-control", placeholder:"Write the D answer" %>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">E</div>
+                                <%= q.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
+                            </div>
+
+                            <%= q.text_field :avaliation_id, value:@avaliation.id, class:"d-none" %>
+                            <button type="button"class="btn btn-danger btn-lg btn-block del-question my-3" > Delete Question</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Questions Ends -->
+        <% end %>
+
+        <button type="button" id="new-question" class="btn btn-primary btn-lg btn-block my-3" > New Question</button>
+        
+    <% end %>
+    <div class="row my-3">
+        <div class="col">
+            <%= submit_tag nil, class:"btn btn-success btn-lg btn-block" do %>
+                <i class="fas fa-check">Submit Test</i>
+            <% end %>
+        </div>
+        <div class="col">
+            <%= link_to 'Back', avaliations_path, class:"btn btn-danger btn-lg btn-block" %>
+        </div>
+    </div>
+<% end %>
+
+<script>
+    var question = document.getElementsByClassName("question")[0].cloneNode(true);
+    document.getElementById("new-question").addEventListener("click", function() {
+        document.getElementById("avaliation").appendChild(question);
+    });
+    var del = document.getElementsByClassName("del-question");
+    for(var i = 0; i < del.length; i++){
+        del[i].addEventListener("click", function() {
+            var q = event.target.parentNode.parentNode.parentNode;
+            q.parentNode.removeChild(q);
+        });
+    }
+</script>

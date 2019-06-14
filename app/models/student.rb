@@ -1,7 +1,8 @@
 class Student < ApplicationRecord
     validates_presence_of :user_id
-    has_many :user, dependent: :delete_all
-    belongs_to :schoolroom
+    has_one :user
+    has_one :schoolroom
+    has_many :answer, dependent: :delete_all
 
     before_validation :set_default_schoolroom
 

@@ -52,7 +52,6 @@
                             </div>
                             <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">                                        
                                 <div class="form-group">
-                                    <%= image_tag @question.picStatement, class:"w-100"%>
                                     <%= form.file_field :picStatement, class:"uploadInput" %>
                                 </div>
                             </div>
@@ -61,6 +60,10 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Show Alternatives</div>
+                        <%= form.text_field :alternatives, class:"form-control alt-check"%>
+                    </div>
                     <div class="input-group-prepend">
                         <div class="input-group-text">A</div>
                         <%= form.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>

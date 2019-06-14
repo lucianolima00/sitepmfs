@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   before_action :account_params, only: [:account_update]
-  before_action :set_user, only: [:set_teacher, :set_student]
+  before_action :set_user, only: [:set_teacher, :set_student, :set_admin]
   skip_before_action :verify_authenticity_token, only: [:account_update]  
 
   def index
@@ -38,28 +38,38 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def set_teacher
-    Student.destroy(Student.where("User_id='#{params[:id]}'").ids.first)
+    Student.destroy(Student.find_by(user_id: params[:id]).id)
     Teacher.new
     Teacher.create("user_id" => params[:id])
     @user.role_id = 2
+    
+    if @user.save
+      redirect_to account_show_path(:id => @user.id)
+    end
   end
 
   def set_student
-    Teacher.destroy(Teacher.where("User_id='#{params[:id]}'"))
+    Teacher.destroy(Teacher.find_by(user_id: params[:id]).id)
     Student.new
     Student.create("user_id" => params[:id])
     @user.role_id = 1
-    @user.save
+    
+    if @user.save
+      redirect_to account_show_path(:id => @user.id)
+    end
   end
 
   def set_admin
+    @user = User.find(params[:id])
     if @user.admin
       @user.admin = false
     else
       @user.admin = true
     end
 
-    @user.save
+    if @user.save
+      redirect_to account_show_path(:id => @user.id)
+    end
   end
 
   # DELETE /resource

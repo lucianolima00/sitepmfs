@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     #@question = Question.new(question_params)
 
     params["questions"].each do |question|
-      if question["textStatement"] != "" || question["altA"] != "" || question["altB"] != "" || question["altC"] != "" || question["altD"] != "" || question["altE"] != "" || question["correctAlt"] != "" 
+      if question["textStatement"] != "" || question["alternatives"] != "" || question["altA"] != "" || question["altB"] != "" || question["altC"] != "" || question["altD"] != "" || question["altE"] != "" || question["correctAlt"] != "" 
         @question = Question.create(questions_params(question))
       end
     end
@@ -79,7 +79,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def questions_params(my_params)
-      my_params.permit(:textStatement, :picStatement, :altA, :altB, :altC, :altD, :altE, :correctAlt, :questionnaire_id) 
+      my_params.permit(:textStatement, :picStatement, :altA, :altB, :altC, :altD, :altE, :correctAlt, :questionnaire_id, :alternatives) 
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

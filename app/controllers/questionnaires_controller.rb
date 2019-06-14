@@ -8,12 +8,16 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires.json
   def index
     @questionnaires = Questionnaire.all.order(created_at: :desc)
+    @avaliations = Avaliation.all.order(created_at: :desc)
   end
 
   # GET /questionnaires/1
   # GET /questionnaires/1.json
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    if current_user.role_id == 1
+      @student = Student.find_by user_id: current_user.id
+    end
     @answer = Answer.new
     @array = []
     Question.where("Questionnaire_id='#{params[:id]}'").each do |q|
@@ -65,24 +69,25 @@ class QuestionnairesController < ApplicationController
 
   #POST /questionnaires/1/answers
   def answer
-    @answer = Answer.new(answer_params)
+    @answer = Answer.find_or_create_by(student_id: params['answer']['student_id'], questionnaire_id: params['answer']['questionnaire_id'])
     @questionnaire = Questionnaire.find(params[:id])
-    @question = Question.find_by(questionnaire_id: @questionnaire.id)
-    @alt = params[:answers]
+    @question = Question.where("questionnaire_id='#{@questionnaire.id}'")
+    @alt = []
+    @alt << params['answer']['answers']
     @grade = 0
     @avg = 100 / @questionnaire.noQuestion 
-    @questionnaire.noQuestion do |a|
+    @questionnaire.noQuestion.times do |a|
       if @alt[a] == @question[a].correctAlt
         @grade = @grade + 1
       end
     end 
+    @answer.answers = @alt
     @answer.student_id = params[:student_id]
     @answer.questionnaire_id = params[:id]
     @answer.grade = @grade * @avg
 
     if @answer.save
-      format.html { redirect_to questionnaire_show_path(@questionnaire), notice: 'Questionnaire was successfully answered.' }
-      format.json { render :show, status: :ok, location: @questionnaire }
+      redirect_to questionnaires_url, notice: 'Questionnaire was successfully answered.'
     end
     
   end

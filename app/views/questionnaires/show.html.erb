@@ -1,11 +1,94 @@
 <p id="notice"><%= notice %></p>
-<%if user_signed_in?%>
-    <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
-    <%if current_user.role_id == 2%>
+<%if user_signed_in? %>
+    <% if current_user.role_id == 1%>
+        <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
+        <%= form_for(@answer, url: answer_create_path(:id => @questionnaire.id, :student_id => Student.find_by(user_id: current_user.id), )) do |form| %>
+            <% @array.each do |question| %>
+                <%= fields_for 'questions[]', question do |q|%>
+                    <!-- Questions -->
+                    <div id="test">
+                        <div class="question">
+                            <div class="card">
+                                <div class="card-header"><%= @numQuestion[@array.find_index(question)]%>o Question </div>
+                                <div class="card-body" id="enunciate">
+                                    <% if question.picStatement.attached? %>
+                                        <div class="tab-content" id="enunciateType" style="margin-top: 10px">
+                                            <div class="tab-pane fade show active" id="upload" style="display: unset !important" role="tabpanel" aria-labelledby="upload-tab">                                        
+                                                <div class="form-group">
+                                                    <%= image_tag question.picStatement, class:"w-100"%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% else %>
+                                        <div class="tab-content" id="enunciateType" style="margin-top: 10px">
+                                            <div class="tab-pane fade show active" id="write" role="tabpanel" aria-labelledby="write-tab">
+                                                <%= q.text_area :textStatement, class:"form-control disabled", rows:"10", placeholder:"Write the enunciate"%>
+                                            </div>
+                                        </div>
+                                    <% end %>
+                                </div>
+
+                                <div class="card-body">
+                                    <% if question.altA %>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text alternative">A</div>
+                                            <%= q.text_field :altA, class:"form-control disabled", placeholder:"Write the A answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altB != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">B</div>
+                                            <%= q.text_field :altB, class:"form-control disabled", placeholder:"Write the B answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altC != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">C</div>
+                                            <%= q.text_field :altC, class:"form-control disabled", placeholder:"Write the C answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altD != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">D</div>
+                                            <%= q.text_field :altD, class:"form-control disabled", placeholder:"Write the D answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altE != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">E</div>
+                                            <%= q.text_field :altE, class:"form-control disabled", placeholder:"Write the E answer" %>
+                                        </div>
+                                    <% end %>
+                                    <!--
+                                    <%= radio_button @answers, "answers", id:"A"%>
+                                    <%= radio_button @answers, "answers", id:"B"%>
+                                    <%= radio_button @answers, "answers", id:"C"%>
+                                    <%= radio_button @answers, "answers", id:"D"%>
+                                    <%= radio_button @answers, "answers", id:"E"%>
+                                    -->
+                                    <%= form.select :answers, @alt.collect, class:"form-control" %>
+                                    <%= form.text_field :questionnaire_id, value:@questionnaire.id, class:"d-none"%>
+                                    <%= form.text_field :student_id, value:@student.id, class:"d-none"%>   
+                                </div>
+                                <%if question.textStatement != nil && current_user.role_id == 2 %>
+                                    <%= link_to 'Edit', edit_question_path(question), class:"btn btn-primary" %>
+                                    <%= link_to 'Erase', question, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+                                <% elsif current_user.role_id == 1 %>
+                                    <%= form.submit "Submit", class:"btn btn-success btn-lg btn-block" do %>
+                                        <i class="fas fa-check">Submit Test</i>
+                                    <% end %>
+                                <% end %>
+                            </div>  
+                        </div>
+                    </div>
+                    <!-- Questions Ends -->
+                <% end %>
+            <% end %>
+        <% end %>
+    <% else%>
+        <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
         <%= link_to 'Edit Questionnaire', edit_questionnaire_path(@questionnaire), class:"btn btn-secondary" %>
         <%= link_to 'Write Questions', questionnaire_write_path(:id => @questionnaire.id), data: { confirm: 'This option will erase all questions. Are you sure?' }, class: "btn btn-primary" %>
-    <% end %>
-    <%= form_for(@answer, url: answer_create_path(:id => @questionnaire.id, :student_id => Student.find_by(user_id: current_user.id), )) do |form| %>
         <% @array.each do |question| %>
             <%= fields_for 'questions[]', question do |q|%>
                 <!-- Questions -->
@@ -30,45 +113,52 @@
                                     </div>
                                 <% end %>
                             </div>
-
-                            <div class="card-body">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text alternative">A</div>
-                                    <%= q.text_field :altA, class:"form-control disabled", placeholder:"Write the A answer" %>
+                                <div class="card-body">
+                                    <% if question.altA != '' %>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text alternative">A</div>
+                                            <%= q.text_field :altA, class:"form-control disabled", placeholder:"Write the A answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altB != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">B</div>
+                                            <%= q.text_field :altB, class:"form-control disabled", placeholder:"Write the B answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altC != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">C</div>
+                                            <%= q.text_field :altC, class:"form-control disabled", placeholder:"Write the C answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altD != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">D</div>
+                                            <%= q.text_field :altD, class:"form-control disabled", placeholder:"Write the D answer" %>
+                                        </div>
+                                    <% end %>
+                                    <% if question.altE != '' %>
+                                        <div class="input-group-prepend alternative">
+                                            <div class="input-group-text">E</div>
+                                            <%= q.text_field :altE, class:"form-control disabled", placeholder:"Write the E answer" %>
+                                        </div>
+                                    <% end %>
+                                    <div class="input-group-prepend alternative">
+                                        <div class="input-group-text">Correct Alternative</div>
+                                        <%= q.text_field :correctAlt, class:"form-control disabled" %>
+                                    </div>
+                                    <!--
+                                    <%= radio_button @answers, "answers", id:"A"%>
+                                    <%= radio_button @answers, "answers", id:"B"%>
+                                    <%= radio_button @answers, "answers", id:"C"%>
+                                    <%= radio_button @answers, "answers", id:"D"%>
+                                    <%= radio_button @answers, "answers", id:"E"%>
+                                    -->
                                 </div>
-                                <div class="input-group-prepend alternative">
-                                    <div class="input-group-text">B</div>
-                                    <%= q.text_field :altB, class:"form-control disabled", placeholder:"Write the B answer" %>
-                                </div>
-                                <div class="input-group-prepend alternative">
-                                    <div class="input-group-text">C</div>
-                                    <%= q.text_field :altC, class:"form-control disabled", placeholder:"Write the C answer" %>
-                                </div>
-                                <div class="input-group-prepend alternative">
-                                    <div class="input-group-text">D</div>
-                                    <%= q.text_field :altD, class:"form-control disabled", placeholder:"Write the D answer" %>
-                                </div>
-                                <div class="input-group-prepend alternative">
-                                    <div class="input-group-text">E</div>
-                                    <%= q.text_field :altE, class:"form-control disabled", placeholder:"Write the E answer" %>
-                                </div>
-                                <!--
-                                <%= radio_button @answers, "answers", id:"A"%>
-                                <%= radio_button @answers, "answers", id:"B"%>
-                                <%= radio_button @answers, "answers", id:"C"%>
-                                <%= radio_button @answers, "answers", id:"D"%>
-                                <%= radio_button @answers, "answers", id:"E"%>
-                                -->
-                                <%= form.select :answers, @alt.collect, class:"form-control" %>
-                                <%= q.text_field :questionnaire_id, value:@questionnaire.id, class:"d-none"%>
-                            </div>
-                            <%if question.textStatement != nil && current_user.role_id == 2 %>
+                            <%if question.textStatement != nil %>
                                 <%= link_to 'Edit', edit_question_path(question), class:"btn btn-primary" %>
                                 <%= link_to 'Erase', question, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
-                            <% elsif current_user.role_id == 1 %>
-                                <%= form.submit "Submit", class:"btn btn-success btn-lg btn-block" do %>
-                                    <i class="fas fa-check">Submit Test</i>
-                                <% end %>
                             <% end %>
                         </div>  
                     </div>

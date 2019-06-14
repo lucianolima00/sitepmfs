@@ -9,17 +9,17 @@
                         <div class="card-body" id="enunciate">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                <a class="nav-link active" id="write-tab" data-toggle="tab" href="#write" role="tab" aria-controls="text" aria-selected="true">Write</a>
+                                <a class="nav-link active" id="write-tab" data-toggle="tab" href="#write<%= @numQuestion[@array.find_index(question)]%>" role="tab" aria-controls="text" aria-selected="true">Write</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="false">Upload</a>
+                                <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload<%= @numQuestion[@array.find_index(question)]%>" role="tab" aria-controls="upload" aria-selected="false">Upload</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="enunciateType" style="margin-top: 10px">
-                                <div class="tab-pane fade show active" id="write" role="tabpanel" aria-labelledby="write-tab">
+                                <div class="tab-pane fade show active" id="write<%= @numQuestion[@array.find_index(question)]%>" role="tabpanel" aria-labelledby="write-tab">
                                     <%= q.text_area :textStatement, class:"form-control", rows:"10", placeholder:"Write the enunciate" %>
                                 </div>
-                                <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">                                        
+                                <div class="tab-pane fade" id="upload<%= @numQuestion[@array.find_index(question)]%>" role="tabpanel" aria-labelledby="upload-tab">                                        
                                     <div class="form-group">
                                         <img class="imgUpload" src="#" alt="" style="display: none; width: 100%;"/>
                                         <%= q.file_field :picStatement, class:"uploadInput" %>
@@ -30,24 +30,30 @@
 
                         <div class="card-body">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">A</div>
-                                <%= q.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>
+                                <p>Show Alternatives</p>
+                                <input type="checkbox" style="margin: 2px 5px;" class="check-alt" checked>
                             </div>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">B</div>
-                                <%= q.text_field :altB, class:"form-control", placeholder:"Write the B answer" %>
-                            </div>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">C</div>
-                                <%= q.text_field :altC, class:"form-control", placeholder:"Write the C answer" %>
-                            </div>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">D</div>
-                                <%= q.text_field :altD, class:"form-control", placeholder:"Write the D answer" %>
-                            </div>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">E</div>
-                                <%= q.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
+                            <div class="alternatives">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">A</div>
+                                    <%= q.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">B</div>
+                                    <%= q.text_field :altB, class:"form-control", placeholder:"Write the B answer" %>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">C</div>
+                                    <%= q.text_field :altC, class:"form-control", placeholder:"Write the C answer" %>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">D</div>
+                                    <%= q.text_field :altD, class:"form-control", placeholder:"Write the D answer" %>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">E</div>
+                                    <%= q.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
+                                </div>
                             </div>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Correct Alternative: </div>
@@ -62,8 +68,28 @@
         <% end %>
     <% end %>
 
-    <%= submit_tag nil, class:"btn btn-success btn-lg btn-block" do %>
+    <%= submit_tag nil, class:"btn btn-success btn-lg btn-block my-3" do %>
         <i class="fas fa-check">Submit Test</i>
     <% end %>
-    <%= link_to 'Back', questionnaires_path, class:"btn btn-danger btn-lg btn-block" %>
+    <%= link_to 'Back', questionnaires_path, class:"btn btn-danger btn-lg btn-block my-3" %>
 <% end %>
+
+<script>
+    var check = document.getElementsByClassName("check-alt");
+    for(var i = 0; i< check.length; i++){
+        check[i].addEventListener("change", function(){
+            var nodes = this.parentNode.parentNode.childNodes
+            for(var j = 0; j < nodes.length; j++){
+                if(nodes[j].className == "alternatives" || nodes[j].className == "alternatives d-none"){
+                    var alt = nodes[j];
+                }
+            }
+            if(this.checked){
+                alt.className = "alternatives"
+            }else{
+                alt.className += " d-none"
+            }
+        });
+    }
+    
+</script>

@@ -1,6 +1,10 @@
 require 'carrierwave/orm/activerecord'
 
 Rails.application.routes.draw do
+  resources :avaliation_questions
+  post 'avaliation/new/model/add', to: 'avaliations#add_question', as: 'add_question'
+  resources :avaliations
+  get 'avaliation/new/model', to: 'avaliations#model', as: 'new_model'
   get 'welcome/index'
   root 'welcome#index'
   resources :answers, :only => [:index]
@@ -16,9 +20,9 @@ Rails.application.routes.draw do
   devise_scope :user do 
     get 'users', to: 'users/registrations#index'
     patch 'users/:id', to: 'users/registrations#account_update', as: 'users_update'
-    put 'account/:id/show', to: 'users/registrations#set_teacher', as: 'set_teacher'
-    put 'account/:id/show', to: 'users/registrations#set_student', as: 'set_student'
-    put 'account/:id/show', to: 'users/registrations#set_admin', as: 'set_admin'
+    put 'account/:id/teacher', to: 'users/registrations#set_teacher', as: 'set_teacher'
+    put 'account/:id/student', to: 'users/registrations#set_student', as: 'set_student'
+    put 'account/:id/admin', to: 'users/registrations#set_admin', as: 'set_admin'
   end
   resources :questionnaires
   get 'questionnaires/:id/write', to: 'questionnaires#write', as: 'questionnaire_write'

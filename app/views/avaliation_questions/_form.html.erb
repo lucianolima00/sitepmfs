@@ -1,0 +1,52 @@
+<%= form_with(model: avaliation_question, local: true) do |form| %>
+  <% if avaliation_question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(avaliation_question.errors.count, "error") %> prohibited this avaliation_question from being saved:</h2>
+
+      <ul>
+      <% avaliation_question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Statement %>
+    <%= form.text_area :Statement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :altA %>
+    <%= form.text_field :altA %>
+  </div>
+
+  <div class="field">
+    <%= form.label :altB %>
+    <%= form.text_field :altB %>
+  </div>
+
+  <div class="field">
+    <%= form.label :altC %>
+    <%= form.text_field :altC %>
+  </div>
+
+  <div class="field">
+    <%= form.label :altD %>
+    <%= form.text_field :altD %>
+  </div>
+
+  <div class="field">
+    <%= form.label :altE %>
+    <%= form.text_field :altE %>
+  </div>
+
+  <div class="field">
+    <%= form.label :avaliation_id %>
+    <%= form.text_field :avaliation_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

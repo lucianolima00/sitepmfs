@@ -1,0 +1,130 @@
+<p id="notice"><%= notice %></p>
+<%if current_user.role_id == 1%>
+  <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
+  <%= form_for(@answer, url: answer_create_path(:id => @questionnaire.id, :student_id => Student.find_by(user_id: current_user.id), )) do |form| %>
+      <% @array.each do |avaliation_question| %>
+          <%= fields_for 'questions[]', question do |q|%>
+              <!-- Questions -->
+              <div id="test">
+                  <div class="question">
+                      <div class="card">
+                          <div class="card-header">Avaliation Question </div>
+                          <div class="card-body" id="enunciate">
+                            <div class="tab-content" id="enunciateType" style="margin-top: 10px">
+                                <div class="tab-pane fade show active" id="write" role="tabpanel" aria-labelledby="write-tab">
+                                    <%= q.text_area :Statement, class:"form-control disabled", rows:"10", placeholder:"Write the enunciate"%>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="card-body">
+                              <div class="input-group-prepend">
+                                  <div class="input-group-text alternative">A</div>
+                                  <%= q.text_field :altA, class:"form-control disabled", placeholder:"Write the A answer" %>
+                              </div>
+                              <div class="input-group-prepend alternative">
+                                  <div class="input-group-text">B</div>
+                                  <%= q.text_field :altB, class:"form-control disabled", placeholder:"Write the B answer" %>
+                              </div>
+                              <div class="input-group-prepend alternative">
+                                  <div class="input-group-text">C</div>
+                                  <%= q.text_field :altC, class:"form-control disabled", placeholder:"Write the C answer" %>
+                              </div>
+                              <div class="input-group-prepend alternative">
+                                  <div class="input-group-text">D</div>
+                                  <%= q.text_field :altD, class:"form-control disabled", placeholder:"Write the D answer" %>
+                              </div>
+                              <div class="input-group-prepend alternative">
+                                  <div class="input-group-text">E</div>
+                                  <%= q.text_field :altE, class:"form-control disabled", placeholder:"Write the E answer" %>
+                              </div>
+                              <!--
+                              <%= radio_button @answers, "answers", id:"A"%>
+                              <%= radio_button @answers, "answers", id:"B"%>
+                              <%= radio_button @answers, "answers", id:"C"%>
+                              <%= radio_button @answers, "answers", id:"D"%>
+                              <%= radio_button @answers, "answers", id:"E"%>
+                              -->
+                              <%= form.select :answers, @alt.collect, class:"form-control" %>
+                              <%= form.text_field :avaliation_id, value:@avaliation.id, class:"d-none"%>
+                              <% if current_user.role_id == 1 %>
+                                <%= form.text_field :student_id, value:@student.id, class:"d-none"%>
+                              <% end %>
+                          </div>
+                          <%if avaliation_question.Statement != nil && current_user.role_id == 2 %>
+                              <%= link_to 'Edit', edit_avaliation_question_path(avaliation_question), class:"btn btn-primary" %>
+                              <%= link_to 'Erase', avaliation_question, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+                          <% elsif current_user.role_id == 1 %>
+                              <%= form.submit "Submit", class:"btn btn-success btn-lg btn-block" do %>
+                                  <i class="fas fa-check">Submit Test</i>
+                              <% end %>
+                          <% end %>
+                      </div>  
+                  </div>
+              </div>
+              <!-- Questions Ends -->
+          <% end %>
+      <% end %>
+  <% end %>
+<% else%>
+  <%= link_to 'Back', questionnaires_path, class:"btn btn-danger" %>
+  <%= link_to 'Edit Avaliation', edit_avaliation_path(@avaliation), class:"btn btn-secondary" %>
+  <% @array.each do |avaliation_question| %>
+      <%= fields_for 'questions[]', avaliation_question do |q|%>
+              <!-- Questions -->
+              <div id="test">
+                  <div class="question">
+                      <div class="card">
+                        <div class="card-header">Avaliation Question </div>
+                        <div class="card-body" id="enunciate">
+                            <div class="tab-content" id="enunciateType" style="margin-top: 10px">
+                                <div class="tab-pane fade show active" id="write" role="tabpanel" aria-labelledby="write-tab">
+                                    <% if @avaliation.model %>
+                                        <%= q.text_area :Statement, class:"form-control disabled", rows:"10", placeholder:"Write the enunciate"%>
+                                    <% else %>
+                                        <textarea class="form-control disabled" rows="10" ><%=avaliation_question.Statement.gsub('@name', User.find(@teacher.user_id).firstName).gsub('@subject', Subject.find(@subject.id).subjectName)%></textarea>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text alternative">A</div>
+                                <%= q.text_field :altA, class:"form-control disabled", placeholder:"Write the A answer" %>
+                            </div>
+                            <div class="input-group-prepend alternative">
+                                <div class="input-group-text">B</div>
+                                <%= q.text_field :altB, class:"form-control disabled", placeholder:"Write the B answer" %>
+                            </div>
+                            <div class="input-group-prepend alternative">
+                                <div class="input-group-text">C</div>
+                                <%= q.text_field :altC, class:"form-control disabled", placeholder:"Write the C answer" %>
+                            </div>
+                            <div class="input-group-prepend alternative">
+                                <div class="input-group-text">D</div>
+                                <%= q.text_field :altD, class:"form-control disabled", placeholder:"Write the D answer" %>
+                            </div>
+                            <div class="input-group-prepend alternative">
+                                <div class="input-group-text">E</div>
+                                <%= q.text_field :altE, class:"form-control disabled", placeholder:"Write the E answer" %>
+                            </div>
+                            <!--
+                            <%= radio_button @answers, "answers", id:"A"%>
+                            <%= radio_button @answers, "answers", id:"B"%>
+                            <%= radio_button @answers, "answers", id:"C"%>
+                            <%= radio_button @answers, "answers", id:"D"%>
+                            <%= radio_button @answers, "answers", id:"E"%>
+                            -->
+                        </div>
+                      <%if avaliation_question.Statement != nil %>
+                        <%= link_to 'Edit', edit_avaliation_question_path(avaliation_question), class:"btn btn-primary" %>
+                        <%= link_to 'Erase', avaliation_question, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+                      <% end %>
+                  </div>  
+              </div>
+          </div>
+          <!-- Questions Ends -->
+      <% end %>
+  <% end %>
+<% end %>

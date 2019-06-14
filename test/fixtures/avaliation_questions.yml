@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Statement: MyText
+  altA: MyString
+  altB: MyString
+  altC: MyString
+  altD: MyString
+  altE: MyString
+  avaliation: one
+
+two:
+  Statement: MyText
+  altA: MyString
+  altB: MyString
+  altC: MyString
+  altD: MyString
+  altE: MyString
+  avaliation: two

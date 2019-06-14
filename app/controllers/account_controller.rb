@@ -1,7 +1,7 @@
 class AccountController < ApplicationController
   before_action :set_user_info
   def index
-    missings_params()
+    missings_params
   end
 
   def new
@@ -53,7 +53,7 @@ class AccountController < ApplicationController
     params.require(:student).permit(:schoolroom_id)
   end
 
-  def missings_params()
+  def missings_params
     
     if @user.role_id == 1
       @student = Student.find(Student.where("user_id=#{@user.id}").ids.first)

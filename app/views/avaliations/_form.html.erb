@@ -1,0 +1,21 @@
+<%= form_with(model: avaliation, local: true) do |form| %>
+  <div class="form-group">
+    <label for="teacher" class="control-label mb-1">Teacher</label>
+    <%= form.select :teacher_id, Teacher.all.collect {|teacher| [User.find(teacher.user_id).firstName, teacher.id]}, class:"form-control"%>
+  </div>
+  <div class="form-group">
+    <label for="subject" class="control-label mb-1">Subject</label>
+    <%= form.select :subject_id, Subject.all.collect {|subject| [subject.subjectName, subject.id]}, class:"form-control"%>
+  </div>
+  <div class="field">
+    <%= form.label :model, class:"d-none" %>
+    <%= form.check_box :mode, checked:false, class:"d-none" %>
+  </div>
+
+  <div class="modal-footer">
+    <%= link_to 'Back', avaliations_path, class:"btn btn-danger" %>
+    <%= form.submit "Save", class:"btn btn-success"%>
+  </div>
+
+
+<% end %>

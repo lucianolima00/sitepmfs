@@ -56,6 +56,10 @@ body .row-footer{
 	border-radius: inherit !important;
 }
 
+.alt-check{
+	width: 50px;
+}
+
 .waves-input-wrapper{
 	display: unset !important;
 }

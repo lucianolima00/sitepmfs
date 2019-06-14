@@ -24,7 +24,7 @@
                                     <%= button_to "Student", set_student_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
                                 <% end %><br/>
                                 <% if @user.admin%>
-                                    <%= button_to "Admin OFF", set_admin_path(:id => @user.id), method: :put, class:"btn-users user-acc"%>
+                                    <%= button_to "No Admin", set_admin_path(:id => @user.id), method: :put, class:"btn btn-danger btn-users user-acc"%>
                                 <% else %>
                                     <%= button_to "Admin", set_admin_path(:id => @user.id), method: :put, class:"btn btn-primary btn-users user-acc"%>
                                 <% end %>

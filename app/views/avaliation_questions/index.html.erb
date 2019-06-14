@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Avaliation Questions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Statement</th>
+      <th>Alta</th>
+      <th>Altb</th>
+      <th>Altc</th>
+      <th>Altd</th>
+      <th>Alte</th>
+      <th>Avaliation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @avaliation_questions.each do |avaliation_question| %>
+      <tr>
+        <td><%= avaliation_question.Statement %></td>
+        <td><%= avaliation_question.altA %></td>
+        <td><%= avaliation_question.altB %></td>
+        <td><%= avaliation_question.altC %></td>
+        <td><%= avaliation_question.altD %></td>
+        <td><%= avaliation_question.altE %></td>
+        <td><%= avaliation_question.avaliation %></td>
+        <td><%= link_to 'Show', avaliation_question %></td>
+        <td><%= link_to 'Edit', edit_avaliation_question_path(avaliation_question) %></td>
+        <td><%= link_to 'Destroy', avaliation_question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Avaliation Question', new_avaliation_question_path %>

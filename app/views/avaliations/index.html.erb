@@ -1,0 +1,83 @@
+<p id="notice"><%= notice %></p>
+<!-- test creator modal scroll -->
+<div class="modal fade" id="testcreator" tabindex="-1" role="create test" aria-labelledby="testcreatorLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">
+        <h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Create Questionnaire</h3>
+      </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <%= render 'form', avaliation: @avaliation %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- end test creator modal scroll -->
+
+<!-- test editor modal scroll -->
+<div id="testedit"></div>
+<!-- end test creator modal scroll -->
+<% if current_user.admin == true %>
+  <!-- New Avaliation Button -->
+  <button class="btn btn-primary" data-toggle="modal" id="create" data-target="#testcreator">
+  <i class="fas fa-plus" style="margin-right: 7.5px"></i>New Avaliation
+  </button>
+  <!-- New Avaliation Button Ends-->
+
+  <!-- New Model Button -->
+  <%= link_to new_model_path, class:"btn btn-primary", id:"model" do %>
+    <i class="fas fa-plus" style="margin-right: 7.5px"></i>New Model
+  <% end %>
+  <!-- New Model Button Ends-->
+<% end %>
+<!-- Test Table -->
+<div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
+    <table class="table test-table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Options</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @avaliations.each do |avaliation| %>
+            <tr>
+              <td><%= avaliation.id %></td>
+              <td>
+              <% if avaliation.teacher_id %>
+                <%= User.find(Teacher.find(avaliation.teacher_id).user_id).firstName%>
+              <% else %>
+                Model
+              <% end %>
+              </td>
+              <td>
+                <div class="table-data-feature">
+                  <%= link_to avaliation, class:"text-decoration-none" do %>
+                    <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
+                      <i class="fas fa-file-alt"></i>
+                    </button>
+                  <%end%>
+                    <%= link_to avaliation, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+</div>
+<!-- Test Table Ends -->
