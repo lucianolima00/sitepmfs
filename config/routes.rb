@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
   resources :answers, :only => [:index]
-  post 'questionnaire/:id/:student_id', to: 'questionnaires#answer', as: 'answer_create'
+  post 'questionnaire/:student_id', to: 'questionnaires#answer', as: 'answer_create'
   get 'account/:id', to: 'account#index', as: 'account'
   get 'account/:id/new', to: 'account#new', as: 'account_new'
   patch 'account/:id/new', to: 'account#create', as: 'account_create'

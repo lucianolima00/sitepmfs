@@ -1,5 +1,5 @@
 class QuestionnairesController < ApplicationController
-  before_action :set_questionnaire, only: [:show, :edit, :answer, :update, :destroy]
+  before_action :set_questionnaire, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index]
   before_action :num_question, only: [:show, :edit, :update, :write]
   before_action :alts, only: [:show, :write]
@@ -18,7 +18,11 @@ class QuestionnairesController < ApplicationController
     if current_user.role_id == 1
       @student = Student.find_by user_id: current_user.id
     end
-    @answer = Answer.new
+    @answer = []
+    @allQuestion = Question.all.order(questionnaire_id: :asc)
+    @allQuestion.count.times do
+      @answer << Answer.new
+    end
     @array = []
     Question.where("Questionnaire_id='#{params[:id]}'").each do |q|
       @array << q
@@ -69,26 +73,30 @@ class QuestionnairesController < ApplicationController
 
   #POST /questionnaires/1/answers
   def answer
-    @answer = Answer.find_or_create_by(student_id: params['answer']['student_id'], questionnaire_id: params['answer']['questionnaire_id'])
-    @questionnaire = Questionnaire.find(params[:id])
-    @question = Question.where("questionnaire_id='#{@questionnaire.id}'")
-    @alt = []
-    @alt << params['answer']['answers']
-    @grade = 0
-    @avg = 100 / @questionnaire.noQuestion 
-    @questionnaire.noQuestion.times do |a|
-      if @alt[a] == @question[a].correctAlt
-        @grade = @grade + 1
+    Questionnaire.all.each do |questionnaire|
+      @alt = []
+      params['answer'].each do |answer|
+        if answer['questionnaire_id'] == questionnaire.id.to_s
+          @alt << answer['answers']
+        end
       end
-    end 
-    @answer.answers = @alt
-    @answer.student_id = params[:student_id]
-    @answer.questionnaire_id = params[:id]
-    @answer.grade = @grade * @avg
-
-    if @answer.save
-      redirect_to questionnaires_url, notice: 'Questionnaire was successfully answered.'
+      @question = Question.where("questionnaire_id='#{questionnaire.id}'")
+      @answer = Answer.find_or_create_by(student_id: params['answer'][0]['student_id'], questionnaire_id: questionnaire.id)
+      @grade = 0
+      @avg = 100 / questionnaire.noQuestion 
+      questionnaire.noQuestion.times do |a|
+        if @alt[a] == @question[a].correctAlt
+          @grade = @grade + 1
+        end
+      end 
+      @answer.answers = @alt
+      @answer.student_id = params[:student_id]
+      @answer.questionnaire_id = questionnaire.id
+      @answer.grade = @grade * @avg
+      @answer.save
     end
+
+    redirect_to questionnaires_url, notice: 'Questionnaire was successfully answered.'
     
   end
 
