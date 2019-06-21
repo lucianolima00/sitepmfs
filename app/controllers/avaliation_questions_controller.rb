@@ -46,10 +46,11 @@ class AvaliationQuestionsController < ApplicationController
   # PATCH/PUT /avaliation_questions/1
   # PATCH/PUT /avaliation_questions/1.json
   def update
+    @avaliation = Avaliation.find(@avaliation_question.avaliation_id)
     respond_to do |format|
       if @avaliation_question.update(avaliation_question_params)
-        format.html { redirect_to @avaliation_question, notice: 'Avaliation question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @avaliation_question }
+        format.html { redirect_to @avaliation, notice: 'Avaliation question was successfully updated.' }
+        format.json { render :show, status: :ok, location: @avaliation }
       else
         format.html { render :edit }
         format.json { render json: @avaliation_question.errors, status: :unprocessable_entity }

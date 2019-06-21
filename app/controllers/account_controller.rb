@@ -9,12 +9,17 @@ class AccountController < ApplicationController
   end
 
   def create
+    unless @user.subjects.include?(params["subjects"]) && params["subjects"] == nil
+      @user.subjects << params["subjects"]
+    end
     if @user.role_id == 1
       if @student.update(student_params) && @user.update(user_params)
         redirect_to account_path(:id => @user.id)
       end
-    elsif @user.update(user_params)
-      redirect_to account_path(:id => @user.id)
+    else
+      if @user.update(user_params)
+        redirect_to account_path(:id => @user.id)
+      end
     end
   end
 
@@ -54,16 +59,15 @@ class AccountController < ApplicationController
   end
 
   def missings_params
-    
     if @user.role_id == 1
-      @student = Student.find(Student.where("user_id=#{@user.id}").ids.first)
-      if @student.schoolroom_id == nil
+      @student = Student.find_by(user_id: @user.id)
+      if @user.birth == nil || @user.avatar == nil || @student.schoolroom_id == nil
         redirect_to account_new_path
       end
-    end
-
-    if @user.birth == nil || @user.avatar || @user.subjects == nil
-      redirect_to account_new_path
+    else
+      if @user.birth == nil || @user.avatar == nil || @user.subjects == nil
+        redirect_to account_new_path
+      end
     end
   end
 end

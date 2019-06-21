@@ -58,7 +58,15 @@
 <script>
     var question = document.getElementsByClassName("question")[0].cloneNode(true);
     document.getElementById("new-question").addEventListener("click", function() {
+        question = question.cloneNode(true);
         document.getElementById("avaliation").appendChild(question);
+        var del = document.getElementsByClassName("del-question");
+        for(var i = 0; i < del.length; i++){
+            del[i].addEventListener("click", function() {
+                var q = event.target.parentNode.parentNode.parentNode;
+                q.parentNode.removeChild(q);
+            });
+        }
     });
     var del = document.getElementsByClassName("del-question");
     for(var i = 0; i < del.length; i++){

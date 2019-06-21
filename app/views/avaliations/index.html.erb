@@ -34,7 +34,7 @@
   <!-- New Avaliation Button Ends-->
 
   <!-- New Model Button -->
-  <%= link_to new_model_path, class:"btn btn-primary", id:"model" do %>
+  <%= link_to new_model_path, data: { confirm: 'This option will erase the actual model. Are you sure?' }, class:"btn btn-primary", id:"model" do %>
     <i class="fas fa-plus" style="margin-right: 7.5px"></i>New Model
   <% end %>
   <!-- New Model Button Ends-->
@@ -63,15 +63,11 @@
               </td>
               <td>
                 <div class="table-data-feature">
-                  <%= link_to avaliation, class:"text-decoration-none" do %>
-                    <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
-                      <i class="fas fa-file-alt"></i>
-                    </button>
+                  <%= link_to avaliation, class:"btn btn-primary btn-users user-acc" do %>
+                    <i class="fas fa-file-alt mx-1"></i>Show
                   <%end%>
-                    <%= link_to avaliation, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                        <i class="fas fa-times"></i>
-                      </button>
+                    <%= link_to avaliation, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-users user-acc" do %>
+                      <i class="fas fa-times mx-1"></i>Delete
                     <% end %>
                 </div>
               </td>

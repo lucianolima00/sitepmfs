@@ -9,9 +9,8 @@ class User < ApplicationRecord
   belongs_to :role
   has_one :student, dependent: :delete
   has_one :teacher, dependent: :delete
-  has_many :questionnaire, dependent: :delete_all
-  has_many :subject, dependent: :delete_all
-  has_one_attached :avatar
+  has_many :questionnaire, dependent: :destroy
+  has_one_attached :avatar, dependent: :delete
 
 
   before_validation :set_default_role, :set_admin_status

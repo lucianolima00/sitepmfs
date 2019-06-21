@@ -1,27 +1,52 @@
 <p id="notice"><%= notice %></p>
-<!-- test creator modal scroll -->
-<div class="modal fade" id="testcreator" tabindex="-1" role="create test" aria-labelledby="testcreatorLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title">
-        <h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Create Questionnaire</h3>
+<% if current_user.role_id == 2%>
+  <!-- test creator modal scroll -->
+  <div class="modal fade" id="testcreator" tabindex="-1" role="create test" aria-labelledby="testcreatorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3 class="text-center title-2" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px;">Create Questionnaire</h3>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="card">
-        <div class="card-body">
-          <%= render 'form', questionnaire: @questionnaire %>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <%= form_with(model: @newquestionnaire, local: true) do |form| %>
+              <div class="form-group">
+                <label for="subject" class="control-label mb-1">Subject</label>
+                <% if current_user.admin == true %>
+                  <%= form.select :subject_id, Subject.all.collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
+                <% else %>
+                  <%= form.select :subject_id, Subject.find(current_user.subjects).collect{|subject| [subject.subjectName, subject.id]}, id:"subject", class:"form-control" %>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="num_question" class="control-label mb-1">Number of Questions</label>
+                    <%= form.number_field :noQuestion, id:"num-question", class:"form-control cc-exp", placeholder:"Enter the number of questions"%>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+                <%= form.submit "Save", class:"btn btn-success"%>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-<!-- end test creator modal scroll -->
+  </div>
+  <!-- end test creator modal scroll -->
+<% end %>
 
 <!-- test editor modal scroll -->
 <div id="testedit"></div>
@@ -36,12 +61,14 @@
 <!-- Test Table -->
 <div style="height: 600px; overflow-y: hidden; border-radius: 10px;">
     <table class="table test-table">
+      <% if current_user.role_id == 2%>
         <thead class="thead-dark">
             <tr>
             <th scope="col">#</th>
             <th scope="col">Teacher</th>
             <th scope="col">Subject</th>
             <th scope="col">Number of Questions</th>
+            <th scope="col">Avaliable</th>
             <th scope="col">Options</th>
             </tr>
         </thead>
@@ -54,27 +81,31 @@
               <td><%= Subject.find(questionnaire.subject_id).subjectName %></td>
               <td><%= questionnaire.noQuestion %></td>
               <td>
+                <% if questionnaire.avaliable %>
+                  Yes
+                <% else %>
+                  No
+                <% end %>
+              </td>
+              <td>
                 <div class="table-data-feature">
-                  <%= link_to questionnaire, class:"text-decoration-none" do %>
-                    <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
-                      <i class="fas fa-file-alt"></i>
-                    </button>
+                  <% unless questionnaire.avaliable%>
+                    <%= link_to set_questionnaire_avaliable_path(:id => questionnaire.id), method: :put, data: { confirm: 'This option will set this test avaliable to be answered by all students. Are you sure?' }, class:"btn btn-success btn-users user-acc" do %>
+                      <i class="fas fa-check mx-1"></i>Avaliable
+                    <%end%>
+                  <% end %>
+                  <%= link_to questionnaire, class:"btn btn-primary btn-users user-acc" do %>
+                    <i class="fas fa-file-alt mx-1"></i>Show
                   <%end%>
                   <% unless current_user.role_id == 1%>
-                    <%= link_to questionnaire_write_path(:id => questionnaire.id), data: { confirm: 'This option will erase all questions. Are you sure?' }, class:"text-decoration-none" do%>
-                      <button class="btn-users user-acc" title="" style="padding: 5px 9.5px;">
-                        <i class="fas fa-pen"></i>
-                      </button>
+                    <%= link_to questionnaire_write_path(:id => questionnaire.id), data: { confirm: 'This option will erase all questions of this questionnaire. Are you sure?' }, class:"btn btn-primary btn-users user-acc" do%>
+                      <i class="fas fa-pen mx-1"></i>Write
                     <% end %>
-                    <%= link_to edit_questionnaire_path(questionnaire), class:"text-decoration-none" do %>
-                      <button class="btn-users user-acc" id="edit" title="" data-original-title="Edit" style="padding: 5px 7px;">
-                        <i class="fas fa-edit"></i>
-                      </button>
+                    <%= link_to edit_questionnaire_path(questionnaire), class:"btn btn-primary btn-users user-acc" do %>
+                      <i class="fas fa-edit mx-1"></i>Edit
                     <%end%>
-                    <%= link_to questionnaire, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                        <i class="fas fa-times"></i>
-                      </button>
+                    <%= link_to questionnaire, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-users user-acc" do %>
+                      <i class="fas fa-times mx-1"></i>Delete
                     <% end %>
                   <%end%>
                 </div>
@@ -82,6 +113,67 @@
             </tr>
           <% end %>
         </tbody>
+      <% else %>
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Options</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              Questionnaire
+            </td>
+            <td> All </td>
+            <td> All </td>
+            <td>
+              <div class="table-data-feature">
+                <% if Answer.where("student_id='#{Student.find_by(user_id: current_user.id).id}'").count == Questionnaire.where("avaliable='TRUE'").count%>
+                  <%= link_to @questionnaire, class:"btn btn-primary btn-users user-acc disabled" do %>
+                      <i class="fas fa-file-alt mx-1"></i>Answer
+                  <%end%>
+                <% else %>
+                  <%= link_to @questionnaire, class:"btn btn-primary btn-users user-acc" do %>
+                      <i class="fas fa-file-alt mx-1"></i>Answer
+                  <%end%>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+          <% @avaliations.each do |avaliation| %>
+            <% unless Avaliation.find(avaliation.id).model %>
+              <tr>
+                <td>
+                  Teacher Avaliation
+                </td>
+                <td>
+                <%= User.find(Teacher.find(Avaliation.find(avaliation.id).teacher_id).user_id).firstName%>
+                </td>
+                <td>
+                <%= Subject.find(Avaliation.find(avaliation.id).subject_id).subjectName%>
+                </td>
+                <td>
+                  <div class="table-data-feature">
+                    <% if AnswerAvaliation.where("student_id='#{current_user.id}'").count == Avaliation.where("model=FALSE").count%>
+                      <%= link_to avaliation, class:"btn btn-primary btn-users user-acc disabled" do %>
+                          <i class="fas fa-file-alt mx-1"></i>Answer
+                      <%end%>
+                    <% else %>
+                      <%= link_to avaliation, class:"btn btn-primary btn-users user-acc" do %>
+                          <i class="fas fa-file-alt mx-1"></i>Answer
+                      <%end%>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <% end %>
     </table>
 </div>
 <!-- Test Table Ends -->

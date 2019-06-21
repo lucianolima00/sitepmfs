@@ -27,20 +27,14 @@
                   <td><%= User.find(Teacher.find(subject.teacher_id).user_id).firstName%></td>
                   <td>
                     <div class="table-data-feature">
-                      <%= link_to subject, class:"text-decoration-none" do %>
-                        <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
-                          <i class="fas fa-file-alt"></i>
-                        </button>
+                      <%= link_to subject, class:"btn btn-primary btn-users user-acc" do %>
+                        <i class="fas fa-file-alt mx-1"></i>Show
                       <%end%>
-                      <%= link_to edit_subject_path(subject), remote: true, :class=>"text-decoration-none" do %>
-                        <button class="btn-users user-acc" id="edit" title="" data-original-title="Edit" style="padding: 5px 7px;">
-                          <i class="fas fa-edit"></i>
-                        </button>
+                      <%= link_to edit_subject_path(subject), remote: true, :class=>"btn btn-primary btn-users user-acc" do %>
+                        <i class="fas fa-edit mx-1"></i>Edit
                       <%end%>
-                      <%= link_to subject, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                          <i class="fas fa-times"></i>
-                        </button>
+                      <%= link_to subject, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-users user-acc" do %>
+                          <i class="fas fa-times mx-1"></i>Delete
                       <%end%>
                     </div>
                   </td>

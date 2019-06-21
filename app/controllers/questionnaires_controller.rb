@@ -1,5 +1,5 @@
 class QuestionnairesController < ApplicationController
-  before_action :set_questionnaire, only: [:show, :edit, :update, :destroy]
+  before_action :set_questionnaire, only: [:show, :edit, :update, :destroy, :avaliable]
   before_action :authenticate_user!, except: [:index]
   before_action :num_question, only: [:show, :edit, :update, :write]
   before_action :alts, only: [:show, :write]
@@ -7,8 +7,10 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires
   # GET /questionnaires.json
   def index
+    @questionnaire = Questionnaire.all.first
     @questionnaires = Questionnaire.all.order(created_at: :desc)
     @avaliations = Avaliation.all.order(created_at: :desc)
+    @newquestionnaire = Questionnaire.new
   end
 
   # GET /questionnaires/1
@@ -37,17 +39,28 @@ class QuestionnairesController < ApplicationController
   def edit
   end
 
+  # GET /questionnaires/1/avaliable
+  def avaliable
+    @questionnaire.avaliable = TRUE
+    if @questionnaire.save
+      redirect_to questionnaires_url
+    end 
+  end
+
   # POST /questionnaires
   # POST /questionnaires.json
   def create
-    @questionnaire = Questionnaire.new(params.permit(:subject_id, :noQuestion))
+    @questionnaire = Questionnaire.new
+    @questionnaire.noQuestion = params["questionnaire"]["noQuestion"]
+    @questionnaire.subject_id = params["questionnaire"]["subject_id"]
+    @questionnaire.user_id = User.find(Teacher.find(Subject.find(params["questionnaire"]["subject_id"]).teacher_id).user_id)
 
     respond_to do |format|
       if @questionnaire.save
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully created.' }
         format.json { render :show, status: :created, location: @questionnaire }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @questionnaire.errors, status: :unprocessable_entity }
       end
     end
@@ -71,7 +84,7 @@ class QuestionnairesController < ApplicationController
     end
   end
 
-  #POST /questionnaires/1/answers
+  #POST /questionnaires/1/
   def answer
     Questionnaire.all.each do |questionnaire|
       @alt = []
@@ -92,8 +105,14 @@ class QuestionnairesController < ApplicationController
       @answer.answers = @alt
       @answer.student_id = params[:student_id]
       @answer.questionnaire_id = questionnaire.id
-      @answer.grade = @grade * @avg
       @answer.save
+      @grades = Grade.new
+      @grades.grade = @grade * @avg
+      @grades.student_id = params[:student_id]
+      @grades.questionnaire_id = questionnaire.id
+      @grades.subject_id = questionnaire.subject_id
+      @grades.schoolroom_id = Student.find(params[:student_id]).schoolroom_id
+      @grades.save
     end
 
     redirect_to questionnaires_url, notice: 'Questionnaire was successfully answered.'

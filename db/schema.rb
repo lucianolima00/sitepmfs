@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_14_143825) do
+ActiveRecord::Schema.define(version: 2019_06_18_132325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,11 +36,21 @@ ActiveRecord::Schema.define(version: 2019_06_14_143825) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "answer_avaliations", force: :cascade do |t|
+    t.bigint "avaliation_id"
+    t.string "answers", default: [], array: true
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.index ["avaliation_id"], name: "index_answer_avaliations_on_avaliation_id"
+    t.index ["student_id"], name: "index_answer_avaliations_on_student_id"
+  end
+
   create_table "answers", force: :cascade do |t|
     t.bigint "student_id"
     t.bigint "questionnaire_id"
     t.string "answers", default: [], array: true
-    t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["questionnaire_id"], name: "index_answers_on_questionnaire_id"
@@ -76,12 +86,27 @@ ActiveRecord::Schema.define(version: 2019_06_14_143825) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "grades", force: :cascade do |t|
+    t.integer "grade"
+    t.bigint "student_id"
+    t.bigint "questionnaire_id"
+    t.bigint "subject_id"
+    t.bigint "schoolroom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_grades_on_questionnaire_id"
+    t.index ["schoolroom_id"], name: "index_grades_on_schoolroom_id"
+    t.index ["student_id"], name: "index_grades_on_student_id"
+    t.index ["subject_id"], name: "index_grades_on_subject_id"
+  end
+
   create_table "questionnaires", force: :cascade do |t|
     t.integer "noQuestion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "subject_id"
     t.bigint "user_id"
+    t.boolean "avaliable", default: false
     t.index ["subject_id"], name: "index_questionnaires_on_subject_id"
     t.index ["user_id"], name: "index_questionnaires_on_user_id"
   end
@@ -159,11 +184,17 @@ ActiveRecord::Schema.define(version: 2019_06_14_143825) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answer_avaliations", "avaliations"
+  add_foreign_key "answer_avaliations", "students"
   add_foreign_key "answers", "questionnaires"
   add_foreign_key "answers", "students"
   add_foreign_key "avaliation_questions", "avaliations"
   add_foreign_key "avaliations", "subjects"
   add_foreign_key "avaliations", "teachers"
+  add_foreign_key "grades", "questionnaires"
+  add_foreign_key "grades", "schoolrooms"
+  add_foreign_key "grades", "students"
+  add_foreign_key "grades", "subjects"
   add_foreign_key "questionnaires", "users"
   add_foreign_key "questions", "questionnaires"
   add_foreign_key "students", "schoolrooms"

@@ -12,74 +12,9 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+//= require chartkick
+//= require Chart.bundle
 //= require_tree .
-
-var Body = document.getElementById('body');
-if(Body){
-	Body.style.maxWidth = window.screen.width + "px";
-
-
-	// Show aside text
-	function asideShow(){
-		var Span = document.getElementsByClassName('aside-span');
-		var Nav = document.getElementsByClassName('aside-item');
-		var Aside = document.getElementById('aside-nav');
-		var NavBar = document.getElementsByClassName('wrapper');
-		var Content = document.getElementsByClassName('container');
-		for (let i = 0; i < Nav.length; i++){
-			Span[i].style.display = "unset";
-			Nav[i].style.width = "150px";
-			Aside.style.width = "160px";
-		}
-		var wid = window.innerWidth;
-		switch(true){
-			case (wid >= 1200):
-				NavBar[0].style.paddingLeft = "160px";
-				Content[0].style.paddingLeft = "160px";
-				break;
-			case (wid >= 768):
-				NavBar[0].style.paddingLeft = "160px";
-				Content[0].style.paddingLeft = "160px";
-				break;
-			default:
-				NavBar[0].style.paddingLeft = "60px";
-				Content[0].style.paddingLeft = "60px";
-				break;
-		}
-
-	}
-	//Hidde aside text
-	function asideHide(){
-		var Span = document.getElementsByClassName('aside-span');
-		var Nav = document.getElementsByClassName('aside-item');
-		var Aside = document.getElementById('aside-nav');
-		var NavBar = document.getElementsByClassName('wrapper');
-		var Content = document.getElementsByClassName('container');
-		for (let i = 0; i < Nav.length; i++){
-			Span[i].style.display = "none";
-			Nav[i].style.width = "47.5px";
-			Aside.style.width = "60px";
-		}
-		var wid = window.innerWidth;
-		switch(true){
-			case (wid >= 1200):
-				NavBar[0].style.paddingLeft = "60px";
-				Content[0].style.paddingLeft = "60px";
-				break;
-			case (wid >= 768):
-				NavBar[0].style.paddingLeft = "60px";
-				Content[0].style.paddingLeft = "60px";
-				break;
-			default:
-				NavBar[0].style.paddingLeft = "60px";
-				Content[0].style.paddingLeft = "60px";
-				break;
-		}
-	}
-
-	document.getElementById("aside-nav").addEventListener("mouseover", function(){asideShow()});
-	document.getElementById("aside-nav").addEventListener("mouseout", function(){asideHide()});
 
 	window.chartColors = {
 		red: 'rgb(255, 99, 132)',

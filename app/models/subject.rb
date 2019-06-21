@@ -3,7 +3,9 @@ class Subject < ApplicationRecord
   before_destroy :delete_subject_teacher
 
   belongs_to :teacher
-  has_many :questionnaire, dependent: :delete_all
+  has_many :questionnaire, dependent: :destroy
+  has_many :avaliation, dependent: :destroy
+  has_many :grade, dependent: :destroy
 
   private
   def set_subject_teacher

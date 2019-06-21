@@ -5,11 +5,11 @@
     <div class="card-body">
         <div class="media">
             <%if @user.avatar.attached?%>
-                <%= image_tag @user.avatar%>
+                <%= image_tag @user.avatar, class:"align-self-center mr-3 account-big", alt:"#{@user.firstName} #{@user.lastName}", size:"200x200" %>
             <% else %>
-                <%= image_tag('unknow-user.jpg', class:"align-self-center mr-3 account-big", alt:"Luciano Lima,", size:"150x150")%>
+                <%= image_tag('unknow-user.jpg', class:"align-self-center mr-3 account-big", alt:"#{@user.firstName} #{@user.lastName}", size:"200x200")%>
             <% end %>
-            <div class="media-body">  
+            <div class="media-body mx-3">  
                 <div class="user-info">
                     <div class="row" style="margin-top: 40px">
                         <div class="col-md-6">
@@ -17,7 +17,9 @@
                             <p>Age: <%= Time.now.year - @user.birth.year%> years</p>
                         </div>
                         <div class="col-md-6">
-                            <p>Class: <%= Schoolroom.find(@student.schoolroom_id).name%></p>
+                            <% if current_user.role_id == 1%>
+                                <p>Class: <%= Schoolroom.find(@student.schoolroom_id).name%></p>
+                            <% end %>
                             <p>Registration: <%= @user.regNumber %></p>
                         </div>
                     </div>
@@ -25,7 +27,7 @@
             </div>
         </div>
 
-        <%= link_to "Edit Account", account_edit_path(:id => @user.id), class:"btn btn-sm btn-primary edit-acc"%>
+        <%= link_to "Edit Account", account_edit_path(:id => @user.id), class:"btn btn-sm btn-primary edit-acc", style:"margin-left: 35px"%>
         <!-- User's Chart-->
         <div class="card" style="margin: 1rem 0">
             <div class="card-body">

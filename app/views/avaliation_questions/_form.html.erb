@@ -1,52 +1,36 @@
-<%= form_with(model: avaliation_question, local: true) do |form| %>
-  <% if avaliation_question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(avaliation_question.errors.count, "error") %> prohibited this avaliation_question from being saved:</h2>
-
-      <ul>
-      <% avaliation_question.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :Statement %>
-    <%= form.text_area :Statement %>
+<%= form_with(model: avaliation_question, local: true) do |q| %>
+  <!-- Questions -->
+  <div id="avaliation">
+      <div class="question my-3">
+          <div class="card">
+              <div class="card-header">Avalation Question </div>
+              <div class="card-body" id="enunciate">
+                  <%= q.text_area :Statement, class:"form-control", rows:"10", placeholder:"Write the enunciate" %>
+              </div>
+              <div class="card-body">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">A</div>
+                      <%= q.text_field :altA, class:"form-control", placeholder:"Write the A answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">B</div>
+                      <%= q.text_field :altB, class:"form-control", placeholder:"Write the B answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">C</div>
+                      <%= q.text_field :altC, class:"form-control", placeholder:"Write the C answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">D</div>
+                      <%= q.text_field :altD, class:"form-control", placeholder:"Write the D answer" %>
+                  </div>
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">E</div>
+                      <%= q.text_field :altE, class:"form-control", placeholder:"Write the E answer" %>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-
-  <div class="field">
-    <%= form.label :altA %>
-    <%= form.text_field :altA %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altB %>
-    <%= form.text_field :altB %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altC %>
-    <%= form.text_field :altC %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altD %>
-    <%= form.text_field :altD %>
-  </div>
-
-  <div class="field">
-    <%= form.label :altE %>
-    <%= form.text_field :altE %>
-  </div>
-
-  <div class="field">
-    <%= form.label :avaliation_id %>
-    <%= form.text_field :avaliation_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <!-- Questions Ends -->
 <% end %>

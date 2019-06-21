@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Lato|Montserrat|Raleway|Staatliches" rel="stylesheet">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>  
   <title>PMFS</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -140,6 +141,75 @@
     integrity="sha256-fNXJFIlca05BIO2Y5zh1xrShK3ME+/lYZ0j+ChxX2DA="
     crossorigin="anonymous"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>  
+    <script>
+
+      var Body = document.getElementById('body');
+
+      if(Body){
+        Body.style.maxWidth = window.screen.width + "px";
+
+
+        // Show aside text
+        function asideShow(){
+          var Span = document.getElementsByClassName('aside-span');
+          var Nav = document.getElementsByClassName('aside-item');
+          var Aside = document.getElementById('aside-nav');
+          var NavBar = document.getElementsByClassName('wrapper');
+          var Content = document.getElementsByClassName('container');
+          for (let i = 0; i < Nav.length; i++){
+            Span[i].style.display = "unset";
+            Nav[i].style.width = "150px";
+            Aside.style.width = "160px";
+          }
+          var wid = window.innerWidth;
+          switch(true){
+            case (wid >= 1200):
+              NavBar[0].style.paddingLeft = "160px";
+              Content[0].style.paddingLeft = "160px";
+              break;
+            case (wid >= 768):
+              NavBar[0].style.paddingLeft = "160px";
+              Content[0].style.paddingLeft = "160px";
+              break;
+            default:
+              NavBar[0].style.paddingLeft = "60px";
+              Content[0].style.paddingLeft = "60px";
+              break;
+          }
+
+        }
+        //Hidde aside text
+        function asideHide(){
+          var Span = document.getElementsByClassName('aside-span');
+          var Nav = document.getElementsByClassName('aside-item');
+          var Aside = document.getElementById('aside-nav');
+          var NavBar = document.getElementsByClassName('wrapper');
+          var Content = document.getElementsByClassName('container');
+          for (let i = 0; i < Nav.length; i++){
+            Span[i].style.display = "none";
+            Nav[i].style.width = "47.5px";
+            Aside.style.width = "60px";
+          }
+          var wid = window.innerWidth;
+          switch(true){
+            case (wid >= 1200):
+              NavBar[0].style.paddingLeft = "60px";
+              Content[0].style.paddingLeft = "60px";
+              break;
+            case (wid >= 768):
+              NavBar[0].style.paddingLeft = "60px";
+              Content[0].style.paddingLeft = "60px";
+              break;
+            default:
+              NavBar[0].style.paddingLeft = "60px";
+              Content[0].style.paddingLeft = "60px";
+              break;
+          }
+        }
+
+        document.getElementById("aside-nav").addEventListener("mouseover", function(){asideShow()});
+        document.getElementById("aside-nav").addEventListener("mouseout", function(){asideHide()});
+      }
+      </script>
   </body>
 </html>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  grade: 1
+  student: one
+  questionnaire: one
+  subject: one
+  schoolroom: one
+
+two:
+  grade: 1
+  student: two
+  questionnaire: two
+  subject: two
+  schoolroom: two

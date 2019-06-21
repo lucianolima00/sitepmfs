@@ -10,6 +10,6 @@
     Role.find_or_create_by({name:role})
 end
 
-['1o Periodo', '3o Periodo', '5o Periodo', '7o Periodo'].each do |schoolroom|
+['1o Periodo', '2o Periodo', '3o Periodo', '4o Periodo', '5o Periodo', '6o Periodo', '7o Periodo'].each do |schoolroom|
     Schoolroom.find_or_create_by({name:schoolroom})
 end
