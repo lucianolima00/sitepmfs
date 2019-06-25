@@ -11,6 +11,14 @@ class QuestionnairesController < ApplicationController
     @questionnaires = Questionnaire.all.order(created_at: :desc)
     @avaliations = Avaliation.all.order(created_at: :desc)
     @newquestionnaire = Questionnaire.new
+    @answer_questionnaire = 0
+    if current_user.role_id == 1
+      current_user.subjects.each do |subject|
+        if Questionnaire.find_by(subject_id: subject).avaliable
+          @answer_questionnaire = @answer_questionnaire + 1
+        end
+      end
+    end
   end
 
   # GET /questionnaires/1
@@ -21,7 +29,12 @@ class QuestionnairesController < ApplicationController
       @student = Student.find_by user_id: current_user.id
     end
     @answer = []
-    @allQuestion = Question.all.order(questionnaire_id: :asc)
+    @allQuestion = []
+    current_user.subjects.each do |subject|
+      Question.where(questionnaire_id: Questionnaire.find_by(subject_id: subject)).order(questionnaire_id: :asc).each do |question|
+        @allQuestion << question
+      end
+    end
     @allQuestion.count.times do
       @answer << Answer.new
     end
@@ -86,31 +99,36 @@ class QuestionnairesController < ApplicationController
 
   #POST /questionnaires/1/
   def answer
-    Questionnaire.all.each do |questionnaire|
+    @questionnaire = []
+    params['answer'].each do |answer|
+      @questionnaire << answer["questionnaire_id"]
+    end
+    @questionnaire.uniq.each do |questionnaire|
       @alt = []
       params['answer'].each do |answer|
-        if answer['questionnaire_id'] == questionnaire.id.to_s
+        if answer['questionnaire_id'] == questionnaire
           @alt << answer['answers']
         end
       end
-      @question = Question.where("questionnaire_id='#{questionnaire.id}'")
-      @answer = Answer.find_or_create_by(student_id: params['answer'][0]['student_id'], questionnaire_id: questionnaire.id)
+      @questionnaire = Questionnaire.find(questionnaire.to_i)
+      @question = Question.where("questionnaire_id='#{questionnaire.to_i}'")
+      @answer = Answer.find_or_create_by(student_id: params['answer'][0]['student_id'], questionnaire_id: questionnaire.to_i)
       @grade = 0
-      @avg = 100 / questionnaire.noQuestion 
-      questionnaire.noQuestion.times do |a|
+      @avg = 100 / @questionnaire.noQuestion 
+      @questionnaire.noQuestion.times do |a|
         if @alt[a] == @question[a].correctAlt
           @grade = @grade + 1
         end
       end 
       @answer.answers = @alt
       @answer.student_id = params[:student_id]
-      @answer.questionnaire_id = questionnaire.id
+      @answer.questionnaire_id = questionnaire.to_i
       @answer.save
       @grades = Grade.new
       @grades.grade = @grade * @avg
       @grades.student_id = params[:student_id]
-      @grades.questionnaire_id = questionnaire.id
-      @grades.subject_id = questionnaire.subject_id
+      @grades.questionnaire_id = questionnaire.to_i
+      @grades.subject_id = @questionnaire.subject_id
       @grades.schoolroom_id = Student.find(params[:student_id]).schoolroom_id
       @grades.save
     end

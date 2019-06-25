@@ -10,7 +10,7 @@ class AccountController < ApplicationController
 
   def create
     unless @user.subjects.include?(params["subjects"]) && params["subjects"] == nil
-      @user.subjects << params["subjects"]
+      @user.subjects << params["user"]["subjects"]
     end
     if @user.role_id == 1
       if @student.update(student_params) && @user.update(user_params)
@@ -31,7 +31,8 @@ class AccountController < ApplicationController
 
   def update
     if @user.role_id == 1
-      if@student.update(student_params) && @user.update(user_params)
+      @user.subjects = params["user"]["subjects"]
+      if @student.update(student_params) && @user.update(user_params)
         redirect_to account_path(:id => @user.id)
       end
     elsif @user.update(user_params)
@@ -61,7 +62,7 @@ class AccountController < ApplicationController
   def missings_params
     if @user.role_id == 1
       @student = Student.find_by(user_id: @user.id)
-      if @user.birth == nil || @user.avatar == nil || @student.schoolroom_id == nil
+      if @user.birth == nil || @user.avatar == nil || @student.schoolroom_id == nil || @user.subjects == "[]"
         redirect_to account_new_path
       end
     else

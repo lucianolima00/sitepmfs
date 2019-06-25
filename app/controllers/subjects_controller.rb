@@ -12,14 +12,29 @@ class SubjectsController < ApplicationController
 
     def create
       @subject = Subject.new(subject_params)
-
-      @teacher = Teacher.find(@subject.teacher_id)
-
-      @user = User.find(@teacher.user_id).subjects << @subject.id
-
       respond_to do |format|
         if @subject.save
           format.html { redirect_to subjects_url, notice: 'Subject was successfully created.' }
+          format.json { render :show, status: :created, location: @subject }
+        else
+          format.html { render :new }
+          format.json { render json: @subject.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def update
+      if @subject.teacher_id != params["subject"]["teacher_id"]
+        @from = User.find(Teacher.find(@subject.teacher_id).user_id)
+        @from.subjects.delete(@subject.id)
+        @from.save
+        @to = User.find(Teacher.find(params["subject"]["teacher_id"]).user_id)
+        @to.subjects << @subject.id
+        @to.save
+      end
+      respond_to do |format|
+        if @subject.update(subject_params)
+          format.html { redirect_to subjects_url, notice: 'Subject was successfully updated.' }
           format.json { render :show, status: :created, location: @subject }
         else
           format.html { render :new }

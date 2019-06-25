@@ -24,10 +24,10 @@
                         </div>
 
                         <div class="form-label-group">
-                                <% for subject in Subject.all%>
-                                    <%= check_box_tag :subjects, subject.id, @user.subjects.include?(subject) %>
-                                    <%= subject.subjectName %><br />
-                                <% end %>
+                            <% for subject in Subject.all%>
+                                <%= check_box_tag "user[subjects][]", subject.id %>
+                                <%= subject.subjectName %><br />
+                            <% end %>
                             <label for="subjects">Current subjects</label>
                         </div>
         

@@ -95,7 +95,7 @@
                     <%end%>
                   <% end %>
                   <%= link_to questionnaire, class:"btn btn-primary btn-users user-acc" do %>
-                    <i class="fas fa-file-alt mx-1"></i>Show
+                    <i class="fas fa-eye mx-1"></i>Show
                   <%end%>
                   <% unless current_user.role_id == 1%>
                     <%= link_to questionnaire_write_path(:id => questionnaire.id), data: { confirm: 'This option will erase all questions of this questionnaire. Are you sure?' }, class:"btn btn-primary btn-users user-acc" do%>
@@ -132,7 +132,7 @@
             <td> All </td>
             <td>
               <div class="table-data-feature">
-                <% if Answer.where("student_id='#{Student.find_by(user_id: current_user.id).id}'").count == Questionnaire.where("avaliable='TRUE'").count%>
+                <% if Answer.where("student_id='#{Student.find_by(user_id: current_user.id).id}'").count == @answer_questionnaire %>
                   <%= link_to @questionnaire, class:"btn btn-primary btn-users user-acc disabled" do %>
                       <i class="fas fa-file-alt mx-1"></i>Answer
                   <%end%>
@@ -145,7 +145,7 @@
             </td>
           </tr>
           <% @avaliations.each do |avaliation| %>
-            <% unless Avaliation.find(avaliation.id).model %>
+            <% unless Avaliation.find(avaliation.id).model || !current_user.subjects.include?(Avaliation.find(avaliation.id).subject_id) %>
               <tr>
                 <td>
                   Teacher Avaliation

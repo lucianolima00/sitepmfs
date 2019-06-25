@@ -24,17 +24,8 @@
             <% end %>
             <td>
               <div class="table-data-feature">
-                <%= link_to account_path(:id => current_user.id), class:"text-decoration-none" do %>
-                  <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
-                    <i class="fas fa-file-alt"></i>
-                  </button>
-                <%end%>
-                <% if current_user.role_id != 1%>
-                  <%= link_to users_path(:id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  <%end%>
+                <%= link_to account_path(:id => current_user.id), class:"btn btn-primary btn-users user-acc" do %>
+                  <i class="fas fa-eye mx-1"></i>Show
                 <%end%>
               </div>
             </td>
@@ -51,16 +42,12 @@
                 <% end %>
                 <td>
                   <div class="table-data-feature">
-                    <%= link_to account_show_path(:id => u.id), class:"text-decoration-none" do %>
-                      <button class="btn-users user-acc" title="" data-original-title="Show" style="padding: 5px 9.5px;">
-                        <i class="fas fa-file-alt"></i>
-                      </button>
+                    <%= link_to account_path(:id => current_user.id), class:"btn btn-primary btn-users user-acc" do %>
+                      <i class="fas fa-eye mx-1"></i>Show
                     <%end%>
                     <% if current_user.role_id != 1%>
-                      <%= link_to users_path(:id => u.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <button class="btn-users user-acc" title="" data-original-title="Delete" style="padding: 5px 9.5px;">
-                          <i class="fas fa-times"></i>
-                        </button>
+                      <%= link_to users_path(:id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-users user-acc" do %>
+                        <i class="fas fa-times mx-1"></i>Delte
                       <%end%>
                     <%end%>
                   </div>
