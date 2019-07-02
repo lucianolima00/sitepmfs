@@ -39,25 +39,14 @@
       </div>
       <div>
       <%if user_signed_in?%>
-        <a href="#" class="nav-link dropdown" id="navbar-account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span style="margin-right: 5px"><%= current_user.firstName%></span>
-        <% if current_user.avatar.attached? %>
-          <%= image_tag(current_user.avatar, alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
-        <% else %>
-          <%= image_tag("icon/profile/unknown-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
-        <% end%>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbar-account">
-        <%=link_to account_path(:id => current_user.id), class:"dropdown-item" do%>
-          <i class="fas fa-user"></i>
-          <span>Account</span>
+        <%=link_to account_path(:id => current_user.id), id:"navbar-account" do%>
+          <span style="margin-right: 5px"><%= current_user.firstName%></span>
+          <% if current_user.avatar.attached? %>
+            <%= image_tag(current_user.avatar, alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+          <% else %>
+            <%= image_tag("icon/profile/unknown-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>
+          <% end%>
         <% end %>
-        <a class="dropdown-item" href="#"><i class="fas fa-cog"></i>Options</a>
-        <div class="dropdown-divider"></div>
-        <%= link_to destroy_user_session_path, method: :delete, class:"dropdown-item" do%>
-          <i class="fas fa-sign-out-alt"></i><span>Sign Out</span>
-        <% end %>
-        </div>
       <% else %>
         <%= link_to new_user_session_path, id:"navbar-account" do%>
           <span style="margin-right: 10px">Sign In</span><%= image_tag("icon/profile/unknown-user.jpg", alt: "Profile Picture", size:"35x35", class:"acc-pict")%>

@@ -75,7 +75,7 @@
 <div class="card" style="margin: 1rem 0">
     <div class="card-body">
         <h5 class="card-title">BCC Chart</h5>   
-        <canvas id="mainChart" class="chartjs-render-monitor" style="display: block; width: 100%; height: 250px;"></canvas>
+        <canvas id="mainChart" class="chartjs-render-monitor" style="display: block; width: 100%; height: 350px;"></canvas>
     </div>
 </div>
 <!-- Chart of Classes Ends-->
@@ -130,100 +130,122 @@
     document.getElementById("studentChart").addEventListener("onload", studentChart());
 
     function mainChart() {
-        var configMain = {
-            type: 'line',
-            data: {
-                labels: ['2016', '2017', '2018', '2019'],
-                datasets: [
-                    <% @schoolroom_grades.each do |grades| %>
-                    {
-                        label: '<%= grades.first%>',
-                        fill: false,
-                        backgroundColor: 'rgba(54, 162, 235, 1)',
-                        borderColor:  'rgba(54, 162, 235, 1)',
-                        data: <%= grades.last %>,
-                    },
-                                
-                    <% end %>
-                ]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: false,
-                            labelString: 'Year'
-                        }
-                    }],
-                    yAxes: [{
-                        display: false,
-                        scaleLabel: {
-                            display: false,
-                            labelString: 'Average'
-                        }
-                    }]
-                },
-                responsive: true
-            }
-        };
-        
-        //Creating MainChart
-        var chart = document.getElementById('mainChart').getContext('2d');
-        window.myLine = new Chart(chart, configMain);
-    }
+	var configMain = {
+		type: 'line',
+		data: {
+			labels: ['2016', '2017', '2018', '2019'],
+			datasets: [{
+				label: '1º Periodo',
+				fill: false,
+				backgroundColor: 'rgba(54, 162, 235, 1)',
+				borderColor:  'rgba(54, 162, 235, 1)',
+				data: [
+					87,
+					64,
+					73,
+					12
+				],
+			}, {
+				label: '2º Periodo',
+				fill: false,
+				backgroundColor: 'rgba(255, 99, 132, 1)',
+				borderColor: 'rgba(255, 99, 132, 1)',
+				data: [
+					78,
+					28,
+					54,
+					0
+				],
+			}, {
+				label: '3º Periodo',
+				fill: false,
+				backgroundColor: '#00d377',
+				borderColor: '#00d377',
+				data: [
+					0,
+					94,
+					21,
+					98
+				],
+			}]
+		},
+		options: {
+			legend: {
+				display: false,
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: false,
+						labelString: 'Year'
+					}
+				}],
+				yAxes: [{
+					display: false,
+					scaleLabel: {
+						display: false,
+						labelString: 'Average'
+					}
+				}]
+			},
+			responsive: true
+		}
+	};
+	
+	//Creating MainChart
+	var chart = document.getElementById('mainChart').getContext('2d');
+	window.myLine = new Chart(chart, configMain);
+}
 
-    function studentChart(){
-        var configStudent = {
-            type: 'radar',
-            data: {
-                labels: ['APS', 'POO', 'ISD', 'CAL', 'BDI', 'EDI'],
-                datasets: [{
-                    label: 'Luciano Lima',
-                    fill: false,
-                    backgroundColor: window.chartColors.blue,
-                    borderColor: window.chartColors.blue,
-                    borderWidth: 2,
-                    pointBackgroundColor: window.chartColors.blue,
-                    pointBorderColor: window.chartColors.blue,
-                    pointRadius: 2,
-                    pointHoverRadius: 4,
-                    data: [
-                        89,
-                        28,
-                        54,
-                        32,
-                        85,
-                        45
-                    ],
-                }]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                responsive: true
-            }
-        };
+function studentChart(){
+	var configStudent = {
+		type: 'radar',
+		data: {
+			labels: ['APS', 'POO', 'ISD', 'CAL', 'BDI', 'EDI'],
+			datasets: [{
+				label: 'Luciano Lima',
+				fill: false,
+				backgroundColor: 'rgba(54, 162, 235, 1)',
+				borderColor:  'rgba(54, 162, 235, 1)',
+				borderWidth: 2,
+				pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+				pointBorderColor: 'rgba(54, 162, 235, 1)',
+				pointRadius: 2,
+				pointHoverRadius: 4,
+				data: [
+					89,
+					28,
+					54,
+					32,
+					85,
+					45
+				],
+			}]
+		},
+		options: {
+			legend: {
+				display: false,
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: false,
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			responsive: true
+		}
+	};
             
         //Creating StudentChart
         var chart = document.getElementById('studentChart').getContext('2d');
